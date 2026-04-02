@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VisaFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f14;--bg2:#13161d;--bg3:#1a1e27;--bg4:#222736;
+  --border:#2a2f3d;--border2:#353b4e;
+  --text:#e8eaf0;--text2:#9aa0b4;--text3:#5c6377;
+  --accent:#4f7df7;--accent2:#3d6be0;--accentbg:rgba(79,125,247,0.12);
+  --green:#3dba7e;--greenbg:rgba(61,186,126,0.12);
+  --amber:#f5a623;--amberbg:rgba(245,166,35,0.12);
+  --red:#e05252;--redbg:rgba(224,82,82,0.12);
+  --purple:#a47cf3;--purplebg:rgba(164,124,243,0.12);
+  --radius:10px;--radius2:14px;
+  --font:'DM Sans',sans-serif;--font2:'Syne',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.6;min-height:100vh;display:flex}
+
+/* SIDEBAR */
+#sidebar{width:220px;min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;left:0;z-index:100}
+.logo{padding:24px 20px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:18px;height:18px;fill:#fff}
+.logo-text{font-family:var(--font2);font-size:17px;font-weight:700;letter-spacing:-0.3px}
+.logo-text span{color:var(--accent)}
+nav{flex:1;padding:12px 0;overflow-y:auto}
+.nav-section{padding:4px 12px 2px;font-size:10px;font-weight:600;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-top:8px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;color:var(--text2);border-radius:8px;margin:2px 8px;transition:all .15s;font-size:13.5px;user-select:none;position:relative}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:var(--accentbg);color:var(--accent)}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;opacity:.8}
+.nav-item.active svg{opacity:1}
+.nav-badge{margin-left:auto;background:var(--accent);color:#fff;font-size:10px;font-weight:600;border-radius:20px;padding:1px 7px;min-width:18px;text-align:center}
+.sidebar-footer{padding:16px;border-top:1px solid var(--border)}
+.user-pill{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:.15s}
+.user-pill:hover{background:var(--bg3)}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;flex-shrink:0}
+.user-name{font-size:13px;font-weight:500}
+.user-role{font-size:11px;color:var(--text3)}
+
+/* MAIN */
+#main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{height:58px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;position:sticky;top:0;z-index:50}
+.topbar-title{font-family:var(--font2);font-size:16px;font-weight:600;flex:1}
+.topbar-actions{display:flex;align-items:center;gap:8px}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;width:240px}
+.search-box input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font);font-size:13px;width:100%}
+.search-box input::placeholder{color:var(--text3)}
+.search-box svg{width:14px;height:14px;color:var(--text3);flex-shrink:0}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:.15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--bg3);color:var(--text)}
+.btn svg{width:14px;height:14px}
+.content{flex:1;padding:24px;overflow-y:auto}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:20px}
+.card-sm{padding:16px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px}
+.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);padding:16px 18px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.02),transparent);pointer-events:none}
+.stat-label{font-size:11.5px;color:var(--text3);font-weight:500;letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px}
+.stat-value{font-family:var(--font2);font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1}
+.stat-sub{font-size:11.5px;color:var(--text3);margin-top:4px}
+.stat-icon{position:absolute;right:14px;top:14px;opacity:.18;width:28px;height:28px}
+.stat-blue .stat-value{color:var(--accent)}
+.stat-green .stat-value{color:var(--green)}
+.stat-amber .stat-value{color:var(--amber)}
+.stat-red .stat-value{color:var(--red)}
+.stat-purple .stat-value{color:var(--purple)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;border-radius:var(--radius2);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;background:var(--bg2)}
+th{padding:11px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.6px;text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--bg3);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13.5px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg3)}
+.tr-link{cursor:pointer}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:500;white-space:nowrap}
+.badge-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.badge-green{background:var(--greenbg);color:var(--green)}
+.badge-green .badge-dot{background:var(--green)}
+.badge-amber{background:var(--amberbg);color:var(--amber)}
+.badge-amber .badge-dot{background:var(--amber)}
+.badge-red{background:var(--redbg);color:var(--red)}
+.badge-red .badge-dot{background:var(--red)}
+.badge-blue{background:var(--accentbg);color:var(--accent)}
+.badge-blue .badge-dot{background:var(--accent)}
+.badge-purple{background:var(--purplebg);color:var(--purple)}
+.badge-purple .badge-dot{background:var(--purple)}
+.badge-gray{background:rgba(255,255,255,.06);color:var(--text2)}
+.badge-gray .badge-dot{background:var(--text3)}
+
+/* FORMS */
+.form-grid{display:grid;gap:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:12px;font-weight:500;color:var(--text2)}
+.form-group input,.form-group select,.form-group textarea{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font);font-size:13.5px;padding:9px 12px;outline:none;transition:.15s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accentbg)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--text3)}
+.form-group select option{background:var(--bg3)}
+.form-group textarea{resize:vertical;min-height:80px}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto}
+.modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg2);z-index:1}
+.modal-title{font-family:var(--font2);font-size:15px;font-weight:600}
+.modal-close{width:28px;height:28px;border-radius:6px;background:none;border:none;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+.modal-close:hover{background:var(--bg3);color:var(--text)}
+.modal-body{padding:20px 24px}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+
+/* PROGRESS */
+.progress-bar{height:6px;background:var(--border);border-radius:4px;overflow:hidden;margin-top:4px}
+.progress-fill{height:100%;border-radius:4px;background:var(--accent);transition:width .4s}
+.progress-fill.green{background:var(--green)}
+.progress-fill.amber{background:var(--amber)}
+
+/* TOASTS */
+#toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px 16px;font-size:13.5px;min-width:260px;display:flex;align-items:center;gap:10px;animation:toastIn .2s ease;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.toast.success{border-left:3px solid var(--green)}
+.toast.error{border-left:3px solid var(--red)}
+.toast.info{border-left:3px solid var(--accent)}
+@keyframes toastIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* SECTION HEADER */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:12px;flex-wrap:wrap}
+.section-title{font-family:var(--font2);font-size:17px;font-weight:600}
+.section-sub{font-size:13px;color:var(--text3)}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filter-btn{padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:500;cursor:pointer;background:var(--bg3);border:1px solid var(--border);color:var(--text2);transition:.15s}
+.filter-btn:hover,.filter-btn.active{background:var(--accentbg);border-color:var(--accent);color:var(--accent)}
+
+/* DETAIL PANEL */
+.detail-grid{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
+.detail-label{font-size:11.5px;font-weight:500;color:var(--text3);margin-bottom:2px}
+.detail-value{font-size:13.5px;color:var(--text)}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.info-row:last-child{border-bottom:none}
+
+/* LOADING */
+.spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-state{text-align:center;padding:48px 24px;color:var(--text3)}
+.empty-state{text-align:center;padding:56px 24px;color:var(--text3)}
+.empty-icon{width:44px;height:44px;margin:0 auto 12px;opacity:.3}
+.empty-title{font-size:15px;font-weight:500;color:var(--text2);margin-bottom:4px}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--border)}
+.tl-item{position:relative;padding-bottom:20px}
+.tl-dot{width:12px;height:12px;border-radius:50%;background:var(--border2);border:2px solid var(--border);position:absolute;left:-20px;top:3px}
+.tl-dot.done{background:var(--green);border-color:var(--green)}
+.tl-dot.active{background:var(--accent);border-color:var(--accent)}
+.tl-label{font-size:12px;font-weight:500;color:var(--text2)}
+.tl-date{font-size:11px;color:var(--text3)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%)}
+  #sidebar.open{transform:translateX(0)}
+  #main{margin-left:0}
+  .form-row{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+}
+.doc-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);font-size:12px;cursor:pointer;transition:.15s}
+.doc-chip:hover{border-color:var(--accent);color:var(--accent)}
+.doc-chip svg{width:13px;height:13px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+    <span class="logo-text">Visa<span>Flow</span></span>
+  </div>
+  <nav>
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" onclick="navigate('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </div>
+    <div class="nav-section">Gestão</div>
+    <div class="nav-item" onclick="navigate('clientes')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Clientes
+      <span class="nav-badge" id="nb-clientes">—</span>
+    </div>
+    <div class="nav-item" onclick="navigate('processos')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Processos
+      <span class="nav-badge" id="nb-processos">—</span>
+    </div>
+    <div class="nav-item" onclick="navigate('pagamentos')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Pagamentos
+    </div>
+    <div class="nav-item" onclick="navigate('documentos')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+      Documentos
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-pill" id="user-pill">
+      <div class="avatar" id="user-avatar">AD</div>
+      <div>
+        <div class="user-name" id="user-name">Carregando...</div>
+        <div class="user-role" id="user-role">—</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="topbar">
+    <span class="topbar-title" id="topbar-title">Dashboard</span>
+    <div class="topbar-actions">
+      <div class="search-box" id="search-box" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="search-input" placeholder="Pesquisar..." oninput="handleSearch(this.value)"/>
+      </div>
+      <button class="btn btn-primary" id="topbar-btn" style="display:none" onclick="openCreateModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span id="topbar-btn-label">Novo</span>
+      </button>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div id="page-dashboard" class="page active">
+      <div id="dash-content"><div class="loading-state"><div class="spinner"></div><p style="margin-top:12px">A carregar...</p></div></div>
+    </div>
+
+    <!-- CLIENTES -->
+    <div id="page-clientes" class="page">
+      <div class="section-header">
+        <div><div class="section-title">Clientes</div><div class="section-sub" id="clientes-count">—</div></div>
+        <div class="filters">
+          <div class="filter-btn active" onclick="filterClientes('all',this)">Todos</div>
+          <div class="filter-btn" onclick="filterClientes('activo',this)">Activos</div>
+          <div class="filter-btn" onclick="filterClientes('inactivo',this)">Inactivos</div>
+        </div>
+      </div>
+      <div class="table-wrap" id="clientes-table"><div class="loading-state"><div class="spinner"></div></div></div>
+    </div>
+
+    <!-- PROCESSOS -->
+    <div id="page-processos" class="page">
+      <div class="section-header">
+        <div><div class="section-title">Processos</div><div class="section-sub" id="processos-count">—</div></div>
+        <div class="filters" id="processos-filters">
+          <div class="filter-btn active" onclick="filterProcessos('',this)">Todos</div>
+          <div class="filter-btn" onclick="filterProcessos('Pendente',this)">Pendente</div>
+          <div class="filter-btn" onclick="filterProcessos('EmAnalise',this)">Em Análise</div>
+          <div class="filter-btn" onclick="filterProcessos('Aprovado',this)">Aprovado</div>
+          <div class="filter-btn" onclick="filterProcessos('Rejeitado',this)">Rejeitado</div>
+          <div class="filter-btn" onclick="filterProcessos('Concluido',this)">Concluído</div>
+        </div>
+      </div>
+      <div class="table-wrap" id="processos-table"><div class="loading-state"><div class="spinner"></div></div></div>
+    </div>
+
+    <!-- PAGAMENTOS -->
+    <div id="page-pagamentos" class="page">
+      <div class="section-header">
+        <div><div class="section-title">Pagamentos</div><div class="section-sub" id="pagamentos-count">—</div></div>
+      </div>
+      <div id="pagamentos-dash-stats" style="margin-bottom:18px"></div>
+      <div class="table-wrap" id="pagamentos-table"><div class="loading-state"><div class="spinner"></div></div></div>
+    </div>
+
+    <!-- DOCUMENTOS -->
+    <div id="page-documentos" class="page">
+      <div class="section-header">
+        <div><div class="section-title">Documentos</div><div class="section-sub">Todos os documentos dos processos</div></div>
+        <div class="filters">
+          <div class="filter-btn active" onclick="filterDocs('all',this)">Todos</div>
+          <div class="filter-btn" onclick="filterDocs('Pendente',this)">Pendentes</div>
+          <div class="filter-btn" onclick="filterDocs('Entregue',this)">Entregues</div>
+          <div class="filter-btn" onclick="filterDocs('Invalido',this)">Inválidos</div>
+        </div>
+      </div>
+      <div class="table-wrap" id="documentos-table"><div class="loading-state"><div class="spinner"></div></div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay open" id="login-modal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header" style="justify-content:center;border:none;padding-bottom:0">
+      <div style="text-align:center;width:100%">
+        <div style="width:48px;height:48px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div style="font-family:var(--font2);font-size:20px;font-weight:700">VisaFlow</div>
+        <div style="font-size:13px;color:var(--text3);margin-top:4px">Sistema de Gestão Migratória</div>
+      </div>
+    </div>
+    <div class="modal-body" style="padding-top:24px">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="login-email" placeholder="admin@visaflow.ao" value="admin@visaflow.ao"/>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-pass" placeholder="••••••••" value="Admin@1234" onkeydown="if(e.key==='Enter')doLogin()"/>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:11px" onclick="doLogin()" id="login-btn">
+          Entrar
+        </button>
+        <div id="login-err" style="font-size:12.5px;color:var(--red);text-align:center;display:none"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE CLIENT MODAL -->
+<div class="modal-overlay" id="modal-cliente">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title" id="mc-title">Novo Cliente</span><button class="modal-close" onclick="closeModal('modal-cliente')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-group"><label>Nome completo *</label><input id="c-nome" placeholder="ex: João Silva"/></div>
+          <div class="form-group"><label>Número BI</label><input id="c-bi" placeholder="ex: 001234567LA041"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Email</label><input type="email" id="c-email" placeholder="joao@email.com"/></div>
+          <div class="form-group"><label>Telefone</label><input id="c-tel" placeholder="+244 9XX XXX XXX"/></div>
+        </div>
+        <div class="form-group"><label>Nacionalidade</label><input id="c-nac" placeholder="ex: Angolana"/></div>
+        <div class="form-group"><label>Observações</label><textarea id="c-obs" placeholder="Notas adicionais..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-cliente')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveCliente()" id="save-cliente-btn">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE PROCESSO MODAL -->
+<div class="modal-overlay" id="modal-processo">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title">Novo Processo</span><button class="modal-close" onclick="closeModal('modal-processo')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>Cliente *</label>
+          <select id="p-cliente"><option value="">Seleccionar cliente...</option></select>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Tipo *</label>
+            <select id="p-tipo">
+              <option value="">Seleccionar...</option>
+              <option>VistoTrabalho</option><option>VistoEstudo</option>
+              <option>Passaporte</option><option>Legalizacao</option><option>ReagrupamentoFamiliar</option>
+            </select>
+          </div>
+          <div class="form-group"><label>País Destino</label><input id="p-pais" placeholder="ex: Portugal"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Valor Total (AOA)</label><input type="number" id="p-valor" placeholder="0.00"/></div>
+          <div class="form-group"><label>Data Agendamento</label><input type="datetime-local" id="p-data"/></div>
+        </div>
+        <div class="form-group"><label>Observações</label><textarea id="p-obs"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-processo')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveProcesso()">Criar Processo</button>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE PAGAMENTO MODAL -->
+<div class="modal-overlay" id="modal-pagamento">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header"><span class="modal-title">Registar Pagamento</span><button class="modal-close" onclick="closeModal('modal-pagamento')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>Processo *</label>
+          <select id="pg-processo"><option value="">Seleccionar processo...</option></select>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Valor (AOA) *</label><input type="number" id="pg-valor" placeholder="0.00"/></div>
+          <div class="form-group"><label>Método *</label>
+            <select id="pg-metodo">
+              <option value="">Seleccionar...</option>
+              <option>Cash</option><option>Transferencia</option><option>TPA</option><option>MobileMoney</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group"><label>Referência / Comprovativo</label><input id="pg-ref" placeholder="ex: TRF-20240112"/></div>
+        <div class="form-group"><label>Observação</label><textarea id="pg-obs" style="min-height:60px"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-pagamento')">Cancelar</button>
+      <button class="btn btn-primary" onclick="savePagamento()">Registar</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal" style="max-width:680px">
+    <div class="modal-header"><span class="modal-title" id="detail-title">Detalhes</span><button class="modal-close" onclick="closeModal('modal-detail')">✕</button></div>
+    <div class="modal-body" id="detail-body"></div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+const API = 'https://visaflow-latest.onrender.com/api';
+let TOKEN = localStorage.getItem('vf_token') || '';
+let CURRENT_PAGE = 'dashboard';
+let USER_DATA = null;
+let ALL_CLIENTES = [];
+let ALL_PROCESSOS = [];
+let ALL_PAGAMENTOS = [];
+let ALL_DOCS = [];
+let FILTER_ESTADO = '';
+let FILTER_DOCS = 'all';
+let FILTER_CLIENTES = 'all';
+let SEARCH_Q = '';
+
+const h = (s,c='')=>`<span style="color:${c}">${s}</span>`;
+const fmt = v=>new Intl.NumberFormat('pt-AO',{style:'currency',currency:'AOA',maximumFractionDigits:0}).format(v||0);
+
+async function api(path,method='GET',body=null){
+  const opts={method,headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN}};
+  if(body)opts.body=JSON.stringify(body);
+  const r=await fetch(API+path,opts);
+  if(r.status===401){logout();throw new Error('Não autorizado');}
+  if(!r.ok){const e=await r.text().catch(()=>'');throw new Error(e||r.statusText);}
+  const txt=await r.text();
+  return txt?JSON.parse(txt):null;
+}
+
+function toast(msg,type='info'){
+  const el=document.createElement('div');
+  el.className=`toast ${type}`;
+  el.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${type==='success'?'var(--green)':type==='error'?'var(--red)':'var(--accent)'}"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${msg}`;
+  document.getElementById('toast-container').appendChild(el);
+  setTimeout(()=>el.remove(),3000);
+}
+
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function openModal(id){document.getElementById(id).classList.add('open');}
+
+// AUTH
+async function doLogin(){
+  const btn=document.getElementById('login-btn');
+  const err=document.getElementById('login-err');
+  err.style.display='none';
+  btn.textContent='A entrar...';btn.disabled=true;
+  try{
+    const r=await fetch(API+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:document.getElementById('login-email').value,password:document.getElementById('login-pass').value})});
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.message||'Credenciais inválidas');}
+    const d=await r.json();
+    TOKEN=d.token;localStorage.setItem('vf_token',TOKEN);
+    USER_DATA=d;
+    document.getElementById('user-name').textContent=d.nome;
+    document.getElementById('user-role').textContent=d.role;
+    document.getElementById('user-avatar').textContent=d.nome.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
+    closeModal('login-modal');
+    initApp();
+  }catch(e){err.textContent=e.message;err.style.display='block';}
+  finally{btn.textContent='Entrar';btn.disabled=false;}
+}
+
+function logout(){TOKEN='';localStorage.removeItem('vf_token');location.reload();}
+
+async function initApp(){
+  if(!TOKEN){openModal('login-modal');return;}
+  try{
+    const me=await api('/auth/me');
+    USER_DATA=me;
+    document.getElementById('user-name').textContent=me.nome;
+    document.getElementById('user-role').textContent=me.role;
+    document.getElementById('user-avatar').textContent=me.nome.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
+  }catch{}
+  loadDashboard();
+  loadClientes();
+  loadProcessos();
+  loadPagamentos();
+  loadDocumentos();
+}
+
+// NAV
+function navigate(page){
+  CURRENT_PAGE=page;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  event.currentTarget.classList.add('active');
+  const titles={dashboard:'Dashboard',clientes:'Clientes',processos:'Processos',pagamentos:'Pagamentos',documentos:'Documentos'};
+  document.getElementById('topbar-title').textContent=titles[page];
+  const sb=document.getElementById('search-box');
+  const bb=document.getElementById('topbar-btn');
+  const bl=document.getElementById('topbar-btn-label');
+  sb.style.display=page!=='dashboard'?'flex':'none';
+  bb.style.display=['clientes','processos','pagamentos'].includes(page)?'inline-flex':'none';
+  if(page==='clientes')bl.textContent='Novo Cliente';
+  if(page==='processos')bl.textContent='Novo Processo';
+  if(page==='pagamentos')bl.textContent='Novo Pagamento';
+  document.getElementById('search-input').value='';
+  SEARCH_Q='';
+}
+
+function openCreateModal(){
+  if(CURRENT_PAGE==='clientes')openClienteModal();
+  else if(CURRENT_PAGE==='processos')openProcessoModal();
+  else if(CURRENT_PAGE==='pagamentos')openPagamentoModal();
+}
+
+function handleSearch(q){SEARCH_Q=q.toLowerCase();renderCurrent();}
+function renderCurrent(){
+  if(CURRENT_PAGE==='clientes')renderClientes();
+  else if(CURRENT_PAGE==='processos')renderProcessos();
+  else if(CURRENT_PAGE==='pagamentos')renderPagamentos();
+  else if(CURRENT_PAGE==='documentos')renderDocumentos();
+}
+
+// BADGE HELPERS
+function estadoBadge(e){
+  const m={Pendente:'amber',EmAnalise:'blue',Agendado:'purple',Aprovado:'green',Concluido:'green',Rejeitado:'red'};
+  const labels={Pendente:'Pendente',EmAnalise:'Em Análise',Agendado:'Agendado',Aprovado:'Aprovado',Concluido:'Concluído',Rejeitado:'Rejeitado'};
+  const c=m[e]||'gray';
+  return `<span class="badge badge-${c}"><span class="badge-dot"></span>${labels[e]||e}</span>`;
+}
+function pgBadge(e){
+  const m={Pago:'green',Parcial:'amber',Pendente:'red'};
+  return `<span class="badge badge-${m[e]||'gray'}">${e}</span>`;
+}
+function docBadge(s){
+  const m={Entregue:'green',Invalido:'red',Pendente:'amber'};
+  const l={Entregue:'Entregue',Invalido:'Inválido',Pendente:'Pendente'};
+  return `<span class="badge badge-${m[s]||'gray'}">${l[s]||s}</span>`;
+}
+
+// DASHBOARD
+async function loadDashboard(){
+  try{
+    const d=await api('/dashboard');
+    const el=document.getElementById('dash-content');
+    document.getElementById('nb-clientes').textContent=d.clientesActivos;
+    document.getElementById('nb-processos').textContent=d.processosAbertos;
+    const taxa=typeof d.taxaAprovacao==='number'?d.taxaAprovacao.toFixed(1):'—';
+    el.innerHTML=`
+    <div class="stat-grid">
+      <div class="stat-card stat-blue">
+        <div class="stat-label">Clientes Activos</div>
+        <div class="stat-value">${d.clientesActivos}</div>
+        <div class="stat-sub">Total: ${d.totalClientes}</div>
+      </div>
+      <div class="stat-card stat-amber">
+        <div class="stat-label">Processos Abertos</div>
+        <div class="stat-value">${d.processosAbertos}</div>
+        <div class="stat-sub">Pendentes: ${d.processosPendentes}</div>
+      </div>
+      <div class="stat-card stat-green">
+        <div class="stat-label">Receita Total</div>
+        <div class="stat-value" style="font-size:20px">${fmt(d.receitaTotal)}</div>
+        <div class="stat-sub">Mês actual: ${fmt(d.receitaMesActual)}</div>
+      </div>
+      <div class="stat-card stat-red">
+        <div class="stat-label">Receita Pendente</div>
+        <div class="stat-value" style="font-size:20px">${fmt(d.receitaPendente)}</div>
+        <div class="stat-sub">Taxa de aprovação: ${taxa}%</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start">
+      <div>
+        <div style="font-family:var(--font2);font-size:14px;font-weight:600;margin-bottom:12px">Últimos Processos</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Cliente</th><th>Tipo</th><th>País</th><th>Estado</th><th>Pagamento</th></tr></thead>
+            <tbody>
+              ${(d.ultimosProcessos||[]).map(p=>`
+              <tr class="tr-link" onclick="showProcessoDetail(${p.id})">
+                <td><span style="font-weight:500">${p.clienteNome}</span></td>
+                <td><span style="font-size:12px;color:var(--text2)">${p.tipo}</span></td>
+                <td>${p.paisDestino||'—'}</td>
+                <td>${estadoBadge(p.estado)}</td>
+                <td>${pgBadge(p.estadoPagamento)}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:var(--font2);font-size:14px;font-weight:600;margin-bottom:12px">Clientes com Dívida</div>
+        ${(d.clientesComDivida||[]).length===0?`<div class="card" style="text-align:center;color:var(--text3);font-size:13px">Sem dívidas em aberto</div>`:''}
+        ${(d.clientesComDivida||[]).map(c=>`
+        <div class="card card-sm" style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-weight:500;font-size:13.5px">${c.clienteNome}</span>
+            <span style="font-size:12px;color:var(--red);font-weight:600">${fmt(c.totalDivida)}</span>
+          </div>
+          <span style="font-size:11.5px;color:var(--text3)">${c.numeroProcessos} processo(s)</span>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }catch(e){document.getElementById('dash-content').innerHTML=`<div class="empty-state"><div class="empty-title">Erro ao carregar dashboard</div><div>${e.message}</div></div>`;}
+}
+
+// CLIENTES
+async function loadClientes(){
+  try{
+    ALL_CLIENTES=await api('/clientes');
+    renderClientes();
+  }catch{}
+}
+
+function filterClientes(f,el){
+  FILTER_CLIENTES=f;
+  document.querySelectorAll('#page-clientes .filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderClientes();
+}
+
+function renderClientes(){
+  let list=ALL_CLIENTES||[];
+  if(FILTER_CLIENTES==='activo')list=list.filter(c=>c.activo);
+  else if(FILTER_CLIENTES==='inactivo')list=list.filter(c=>!c.activo);
+  if(SEARCH_Q&&CURRENT_PAGE==='clientes')list=list.filter(c=>(c.nome+c.email+c.numeroBI+c.telefone).toLowerCase().includes(SEARCH_Q));
+  document.getElementById('clientes-count').textContent=`${list.length} cliente(s)`;
+  if(!list.length){document.getElementById('clientes-table').innerHTML=`<div class="empty-state"><div class="empty-title">Nenhum cliente encontrado</div></div>`;return;}
+  document.getElementById('clientes-table').innerHTML=`
+  <table>
+    <thead><tr><th>Nome</th><th>BI</th><th>Telefone</th><th>Email</th><th>Processos</th><th>Estado</th><th>Cadastro</th></tr></thead>
+    <tbody>${list.map(c=>`
+    <tr class="tr-link" onclick="showClienteDetail(${c.id})">
+      <td><span style="font-weight:500">${c.nome}</span></td>
+      <td style="font-family:monospace;font-size:12px">${c.numeroBI||'—'}</td>
+      <td>${c.telefone||'—'}</td>
+      <td style="color:var(--text2)">${c.email||'—'}</td>
+      <td><span class="badge badge-blue">${c.totalProcessos||0}</span></td>
+      <td>${c.activo?'<span class="badge badge-green">Activo</span>':'<span class="badge badge-gray">Inactivo</span>'}</td>
+      <td style="font-size:12px;color:var(--text3)">${fmtDate(c.dataCadastro)}</td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
+
+// PROCESSOS
+async function loadProcessos(){
+  try{
+    ALL_PROCESSOS=await api('/processos');
+    renderProcessos();
+  }catch{}
+}
+
+function filterProcessos(estado,el){
+  FILTER_ESTADO=estado;
+  document.querySelectorAll('#processos-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderProcessos();
+}
+
+function renderProcessos(){
+  let list=ALL_PROCESSOS||[];
+  if(FILTER_ESTADO)list=list.filter(p=>p.estado===FILTER_ESTADO);
+  if(SEARCH_Q&&CURRENT_PAGE==='processos')list=list.filter(p=>(p.clienteNome+p.tipo+p.paisDestino).toLowerCase().includes(SEARCH_Q));
+  document.getElementById('processos-count').textContent=`${list.length} processo(s)`;
+  if(!list.length){document.getElementById('processos-table').innerHTML=`<div class="empty-state"><div class="empty-title">Nenhum processo encontrado</div></div>`;return;}
+  document.getElementById('processos-table').innerHTML=`
+  <table>
+    <thead><tr><th>ID</th><th>Cliente</th><th>Tipo</th><th>País</th><th>Valor</th><th>Pago</th><th>Estado</th><th>Pagamento</th><th>Data</th></tr></thead>
+    <tbody>${list.map(p=>`
+    <tr class="tr-link" onclick="showProcessoDetail(${p.id})">
+      <td style="font-size:12px;color:var(--text3)">#${p.id}</td>
+      <td><span style="font-weight:500">${p.clienteNome}</span></td>
+      <td style="font-size:12px">${p.tipo}</td>
+      <td>${p.paisDestino||'—'}</td>
+      <td style="font-family:monospace;font-size:12px">${fmt(p.valorTotal)}</td>
+      <td>
+        <div style="min-width:80px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span>${p.percentagemPaga?p.percentagemPaga.toFixed(0):0}%</span></div>
+          <div class="progress-bar"><div class="progress-fill ${p.percentagemPaga>=100?'green':p.percentagemPaga>0?'':'amber'}" style="width:${Math.min(p.percentagemPaga||0,100)}%"></div></div>
+        </div>
+      </td>
+      <td>${estadoBadge(p.estado)}</td>
+      <td>${pgBadge(p.estadoPagamento)}</td>
+      <td style="font-size:12px;color:var(--text3)">${fmtDate(p.dataCriacao)}</td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
+
+// PAGAMENTOS
+async function loadPagamentos(){
+  try{
+    const d=await api('/pagamentos/dashboard');
+    ALL_PAGAMENTOS=d.pagamentos||d||[];
+    const stats=d.stats||null;
+    if(stats){
+      document.getElementById('pagamentos-dash-stats').innerHTML=`
+      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card stat-green"><div class="stat-label">Total Recebido</div><div class="stat-value" style="font-size:19px">${fmt(stats.totalRecebido)}</div></div>
+        <div class="stat-card stat-amber"><div class="stat-label">A Receber</div><div class="stat-value" style="font-size:19px">${fmt(stats.totalPendente)}</div></div>
+        <div class="stat-card stat-blue"><div class="stat-label">Este Mês</div><div class="stat-value" style="font-size:19px">${fmt(stats.meActual)}</div></div>
+      </div>`;
+    }
+    renderPagamentos();
+  }catch{
+    ALL_PAGAMENTOS=[];renderPagamentos();
+  }
+}
+
+function renderPagamentos(){
+  let list=ALL_PAGAMENTOS||[];
+  if(SEARCH_Q&&CURRENT_PAGE==='pagamentos')list=list.filter(p=>(p.clienteNome+p.metodo+p.referencia).toLowerCase().includes(SEARCH_Q));
+  document.getElementById('pagamentos-count').textContent=`${list.length} pagamento(s)`;
+  if(!list.length){document.getElementById('pagamentos-table').innerHTML=`<div class="empty-state"><div class="empty-title">Nenhum pagamento encontrado</div></div>`;return;}
+  document.getElementById('pagamentos-table').innerHTML=`
+  <table>
+    <thead><tr><th>ID</th><th>Cliente</th><th>Processo</th><th>Valor</th><th>Método</th><th>Referência</th><th>Registado por</th><th>Data</th></tr></thead>
+    <tbody>${list.map(p=>`
+    <tr>
+      <td style="font-size:12px;color:var(--text3)">#${p.id}</td>
+      <td><span style="font-weight:500">${p.clienteNome||'—'}</span></td>
+      <td style="font-size:12px;color:var(--text2)">#${p.processoId}</td>
+      <td style="font-family:monospace;font-size:13px;color:var(--green);font-weight:500">${fmt(p.valor)}</td>
+      <td><span class="badge badge-gray">${p.metodo}</span></td>
+      <td style="font-size:12px;font-family:monospace">${p.referencia||'—'}</td>
+      <td style="font-size:12px;color:var(--text3)">${p.registadoPor||'—'}</td>
+      <td style="font-size:12px;color:var(--text3)">${fmtDate(p.dataPagamento)}</td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
+
+// DOCUMENTOS
+async function loadDocumentos(){
+  try{
+    const procs=ALL_PROCESSOS.length?ALL_PROCESSOS:await api('/processos');
+    const all=[];
+    await Promise.all(procs.slice(0,30).map(async p=>{
+      try{const docs=await api(`/documentos/processo/${p.id}`);docs.forEach(d=>{d._clienteNome=p.clienteNome;d._tipoProcesso=p.tipo;});all.push(...docs);}catch{}
+    }));
+    ALL_DOCS=all;
+    renderDocumentos();
+  }catch{}
+}
+
+function filterDocs(f,el){
+  FILTER_DOCS=f;
+  document.querySelectorAll('#page-documentos .filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderDocumentos();
+}
+
+function renderDocumentos(){
+  let list=ALL_DOCS||[];
+  if(FILTER_DOCS!=='all')list=list.filter(d=>d.status===FILTER_DOCS);
+  if(SEARCH_Q&&CURRENT_PAGE==='documentos')list=list.filter(d=>(d.tipo+d.nomeFicheiro+(d._clienteNome||'')).toLowerCase().includes(SEARCH_Q));
+  if(!list.length){document.getElementById('documentos-table').innerHTML=`<div class="empty-state"><div class="empty-title">Nenhum documento encontrado</div></div>`;return;}
+  document.getElementById('documentos-table').innerHTML=`
+  <table>
+    <thead><tr><th>Tipo</th><th>Ficheiro</th><th>Cliente</th><th>Processo</th><th>Status</th><th>Tamanho</th><th>Upload</th><th>Ações</th></tr></thead>
+    <tbody>${list.map(d=>`
+    <tr>
+      <td style="font-weight:500;font-size:13px">${d.tipo}</td>
+      <td style="font-size:12px;color:var(--text2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.nomeFicheiro}</td>
+      <td>${d._clienteNome||'—'}</td>
+      <td style="font-size:12px;color:var(--text3)">#${d.processoId}</td>
+      <td>${docBadge(d.status)}</td>
+      <td style="font-size:11.5px;color:var(--text3)">${fmtBytes(d.tamanhoBytes)}</td>
+      <td style="font-size:12px;color:var(--text3)">${fmtDate(d.dataUpload)}</td>
+      <td>
+        <button class="btn btn-ghost" style="padding:5px 10px;font-size:12px" onclick="downloadDoc(${d.id},'${d.nomeFicheiro}')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+      </td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
+
+async function downloadDoc(id,nome){
+  try{
+    const r=await fetch(API+`/documentos/download/${id}`,{headers:{'Authorization':'Bearer '+TOKEN}});
+    if(!r.ok)throw new Error();
+    const blob=await r.blob();
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download=nome;a.click();
+    URL.revokeObjectURL(url);
+  }catch{toast('Erro ao descarregar ficheiro','error');}
+}
+
+// DETAIL VIEWS
+async function showClienteDetail(id){
+  openModal('modal-detail');
+  document.getElementById('detail-title').textContent='Detalhes do Cliente';
+  document.getElementById('detail-body').innerHTML='<div class="loading-state"><div class="spinner"></div></div>';
+  try{
+    const c=await api(`/clientes/${id}`);
+    document.getElementById('detail-body').innerHTML=`
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+      <div class="avatar" style="width:52px;height:52px;font-size:16px">${c.nome.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase()}</div>
+      <div>
+        <div style="font-family:var(--font2);font-size:17px;font-weight:600">${c.nome}</div>
+        <div style="font-size:12.5px;color:var(--text3);margin-top:2px">${c.nacionalidade||'—'} · ${c.activo?'Activo':'Inactivo'}</div>
+      </div>
+    </div>
+    <div class="card card-sm" style="margin-bottom:14px">
+      ${[['BI',c.numeroBI],['Email',c.email],['Telefone',c.telefone],['Cadastro',fmtDate(c.dataCadastro)],['Processos',c.totalProcessos]].map(([l,v])=>`
+      <div class="info-row"><span class="detail-label">${l}</span><span class="detail-value">${v||'—'}</span></div>`).join('')}
+    </div>
+    ${c.observacoes?`<div class="card card-sm"><div class="detail-label" style="margin-bottom:6px">Observações</div><div style="font-size:13px;color:var(--text2)">${c.observacoes}</div></div>`:''}
+    <div style="margin-top:16px;display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="closeModal('modal-detail');CURRENT_PAGE='processos';navigate('processos')">Ver Processos</button>
+    </div>`;
+  }catch(e){document.getElementById('detail-body').innerHTML=`<div class="empty-state">${e.message}</div>`;}
+}
+
+async function showProcessoDetail(id){
+  openModal('modal-detail');
+  document.getElementById('detail-title').textContent='Detalhes do Processo';
+  document.getElementById('detail-body').innerHTML='<div class="loading-state"><div class="spinner"></div></div>';
+  try{
+    const [p,resumo]=await Promise.all([api(`/processos/${id}`),api(`/pagamentos/resumo/${id}`)]);
+    const docs=p.documentos||await api(`/documentos/processo/${id}`).catch(()=>[]);
+    document.getElementById('detail-body').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div class="stat-card stat-blue"><div class="stat-label">Valor Total</div><div class="stat-value" style="font-size:18px">${fmt(p.valorTotal)}</div></div>
+      <div class="stat-card stat-green"><div class="stat-label">Total Pago</div><div class="stat-value" style="font-size:18px">${fmt(resumo.totalPago)}</div></div>
+      <div class="stat-card stat-red"><div class="stat-label">Saldo</div><div class="stat-value" style="font-size:18px">${fmt(resumo.saldo)}</div></div>
+      <div class="stat-card"><div class="stat-label">% Paga</div><div class="stat-value" style="font-size:18px">${(resumo.percentagemPaga||0).toFixed(0)}%</div></div>
+    </div>
+    <div class="card card-sm" style="margin-bottom:14px">
+      ${[['Cliente',p.clienteNome],['Tipo',p.tipo],['País Destino',p.paisDestino||'—'],['Estado',estadoBadge(p.estado)],['Pagamento',pgBadge(resumo.estadoPagamento)],['Criado em',fmtDate(p.dataCriacao)],['Agendamento',p.dataAgendamento?fmtDate(p.dataAgendamento):'—']].map(([l,v])=>`
+      <div class="info-row"><span class="detail-label">${l}</span><span class="detail-value">${v}</span></div>`).join('')}
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:13px;font-weight:500;margin-bottom:8px">Documentos (${docs.length})</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${docs.length?docs.map(d=>`<span class="doc-chip">${docBadge(d.status)} <span style="font-size:12px">${d.tipo}</span></span>`).join(''):'<span style="font-size:13px;color:var(--text3)">Sem documentos</span>'}
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:8px">Histórico de Pagamentos</div>
+      ${(resumo.historicoPagamentos||[]).length===0?`<div style="font-size:13px;color:var(--text3)">Sem pagamentos registados</div>`:`
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Data</th><th>Valor</th><th>Método</th><th>Ref.</th></tr></thead>
+          <tbody>${(resumo.historicoPagamentos||[]).map(pg=>`
+          <tr><td style="font-size:12px">${fmtDate(pg.dataPagamento)}</td>
+          <td style="color:var(--green);font-weight:500">${fmt(pg.valor)}</td>
+          <td>${pg.metodo}</td>
+          <td style="font-size:12px;font-family:monospace">${pg.referencia||'—'}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`}
+    </div>`;
+  }catch(e){document.getElementById('detail-body').innerHTML=`<div class="empty-state">${e.message}</div>`;}
+}
+
+// SAVE CLIENTE
+function openClienteModal(){
+  document.getElementById('mc-title').textContent='Novo Cliente';
+  ['c-nome','c-bi','c-email','c-tel','c-nac','c-obs'].forEach(id=>document.getElementById(id).value='');
+  openModal('modal-cliente');
+}
+async function saveCliente(){
+  const nome=document.getElementById('c-nome').value.trim();
+  if(!nome){toast('Nome é obrigatório','error');return;}
+  const btn=document.getElementById('save-cliente-btn');
+  btn.textContent='A guardar...';btn.disabled=true;
+  try{
+    await api('/clientes','POST',{nome,numeroBI:document.getElementById('c-bi').value,email:document.getElementById('c-email').value,telefone:document.getElementById('c-tel').value,nacionalidade:document.getElementById('c-nac').value,observacoes:document.getElementById('c-obs').value});
+    toast('Cliente criado com sucesso','success');
+    closeModal('modal-cliente');
+    loadClientes();loadDashboard();
+  }catch(e){toast(e.message,'error');}
+  finally{btn.textContent='Guardar';btn.disabled=false;}
+}
+
+// SAVE PROCESSO
+async function openProcessoModal(){
+  const sel=document.getElementById('p-cliente');
+  sel.innerHTML='<option value="">Seleccionar cliente...</option>';
+  const clientes=ALL_CLIENTES.length?ALL_CLIENTES:await api('/clientes').catch(()=>[]);
+  clientes.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.nome;sel.appendChild(o);});
+  ['p-tipo','p-pais','p-valor','p-data','p-obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  openModal('modal-processo');
+}
+async function saveProcesso(){
+  const clienteId=parseInt(document.getElementById('p-cliente').value);
+  const tipo=document.getElementById('p-tipo').value;
+  if(!clienteId||!tipo){toast('Cliente e tipo são obrigatórios','error');return;}
+  try{
+    await api('/processos','POST',{clienteId,tipo,paisDestino:document.getElementById('p-pais').value,valorTotal:parseFloat(document.getElementById('p-valor').value)||0,observacoes:document.getElementById('p-obs').value,dataAgendamento:document.getElementById('p-data').value||null});
+    toast('Processo criado com sucesso','success');
+    closeModal('modal-processo');
+    loadProcessos();loadDashboard();
+  }catch(e){toast(e.message,'error');}
+}
+
+// SAVE PAGAMENTO
+async function openPagamentoModal(){
+  const sel=document.getElementById('pg-processo');
+  sel.innerHTML='<option value="">Seleccionar processo...</option>';
+  const procs=ALL_PROCESSOS.length?ALL_PROCESSOS:await api('/processos').catch(()=>[]);
+  procs.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=`#${p.id} — ${p.clienteNome} (${p.tipo})`;sel.appendChild(o);});
+  ['pg-valor','pg-metodo','pg-ref','pg-obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  openModal('modal-pagamento');
+}
+async function savePagamento(){
+  const processoId=parseInt(document.getElementById('pg-processo').value);
+  const valor=parseFloat(document.getElementById('pg-valor').value);
+  const metodo=document.getElementById('pg-metodo').value;
+  if(!processoId||!valor||!metodo){toast('Processo, valor e método são obrigatórios','error');return;}
+  try{
+    await api('/pagamentos','POST',{processoId,valor,metodo,referencia:document.getElementById('pg-ref').value,observacao:document.getElementById('pg-obs').value});
+    toast('Pagamento registado','success');
+    closeModal('modal-pagamento');
+    loadPagamentos();loadDashboard();loadProcessos();
+  }catch(e){toast(e.message,'error');}
+}
+
+// UTILS
+function fmtDate(d){if(!d)return'—';const dt=new Date(d);return dt.toLocaleDateString('pt-AO',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtBytes(b){if(!b)return'—';if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(0)+'KB';return(b/1048576).toFixed(1)+'MB';}
+
+// CLOSE ON OVERLAY CLICK
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',e=>{if(e.target===o&&o.id!=='login-modal')closeModal(o.id);});
+});
+
+// START
+if(TOKEN){
+  closeModal('login-modal');
+  initApp();
+}
+</script>
+</body>
+</html>
