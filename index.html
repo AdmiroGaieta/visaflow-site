@@ -2,234 +2,319 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>VisaFlow</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d0f14;--bg2:#13161d;--bg3:#1a1e27;--bg4:#222736;
-  --border:#2a2f3d;--border2:#353b4e;
-  --text:#e8eaf0;--text2:#9aa0b4;--text3:#5c6377;
-  --accent:#4f7df7;--accent2:#3d6be0;--accentbg:rgba(79,125,247,0.12);
-  --green:#3dba7e;--greenbg:rgba(61,186,126,0.12);
-  --amber:#f5a623;--amberbg:rgba(245,166,35,0.12);
-  --red:#e05252;--redbg:rgba(224,82,82,0.12);
-  --purple:#a47cf3;--purplebg:rgba(164,124,243,0.12);
-  --radius:10px;--radius2:14px;
-  --font:'DM Sans',sans-serif;--font2:'Syne',sans-serif;
+  --bg:#0b0d12;--bg2:#111318;--bg3:#171a22;--bg4:#1e2230;--bg5:#252a38;
+  --border:#1f2333;--border2:#2a2f45;--border3:#353c55;
+  --text:#dde1f0;--text2:#8890aa;--text3:#4a5068;
+  --accent:#5b7fff;--accent-h:#4a6ef0;--accent-bg:rgba(91,127,255,.1);--accent-bg2:rgba(91,127,255,.18);
+  --green:#34c47c;--green-bg:rgba(52,196,124,.1);
+  --amber:#f0a22e;--amber-bg:rgba(240,162,46,.1);
+  --red:#e05656;--red-bg:rgba(224,86,86,.1);
+  --purple:#9b6fef;--purple-bg:rgba(155,111,239,.1);
+  --teal:#29c8c8;--teal-bg:rgba(41,200,200,.1);
+  --r:10px;--r2:14px;--r3:18px;
+  --font:'Inter',sans-serif;--font2:'Syne',sans-serif;
+  --sh:0 4px 24px rgba(0,0,0,.35);
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.6;min-height:100vh;display:flex}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13.5px;line-height:1.6;display:flex}
 
-/* SIDEBAR */
-#sidebar{width:220px;min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;left:0;z-index:100}
-.logo{padding:24px 20px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
-.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.logo-icon svg{width:18px;height:18px;fill:#fff}
-.logo-text{font-family:var(--font2);font-size:17px;font-weight:700;letter-spacing:-0.3px}
-.logo-text span{color:var(--accent)}
-nav{flex:1;padding:12px 0;overflow-y:auto}
-.nav-section{padding:4px 12px 2px;font-size:10px;font-weight:600;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-top:8px}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;color:var(--text2);border-radius:8px;margin:2px 8px;transition:all .15s;font-size:13.5px;user-select:none;position:relative}
+/* ─── SIDEBAR ─────────────────────────── */
+#sidebar{width:230px;height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+.logo{padding:20px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.logo-icon{width:34px;height:34px;background:var(--accent);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-text{font-family:var(--font2);font-size:18px;font-weight:700;letter-spacing:-.4px}
+.logo-text b{color:var(--accent)}
+nav{flex:1;padding:10px 8px;overflow-y:auto}
+.nav-sep{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:1.2px;text-transform:uppercase;padding:8px 10px 4px;margin-top:6px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;cursor:pointer;color:var(--text2);border-radius:8px;transition:all .15s;font-size:13px;user-select:none;position:relative}
+.nav-item svg{width:15px;height:15px;flex-shrink:0}
 .nav-item:hover{background:var(--bg3);color:var(--text)}
-.nav-item.active{background:var(--accentbg);color:var(--accent)}
-.nav-item svg{width:16px;height:16px;flex-shrink:0;opacity:.8}
-.nav-item.active svg{opacity:1}
-.nav-badge{margin-left:auto;background:var(--accent);color:#fff;font-size:10px;font-weight:600;border-radius:20px;padding:1px 7px;min-width:18px;text-align:center}
-.sidebar-footer{padding:16px;border-top:1px solid var(--border)}
-.user-pill{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:.15s}
-.user-pill:hover{background:var(--bg3)}
-.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;flex-shrink:0}
-.user-name{font-size:13px;font-weight:500}
-.user-role{font-size:11px;color:var(--text3)}
+.nav-item.active{background:var(--accent-bg2);color:var(--accent);font-weight:500}
+.nav-badge{margin-left:auto;background:var(--accent);color:#fff;font-size:10px;font-weight:600;border-radius:20px;padding:1px 6px;min-width:18px;text-align:center;line-height:16px}
+.sidebar-footer{padding:12px;border-top:1px solid var(--border)}
+.user-card{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:9px;cursor:pointer;transition:.15s}
+.user-card:hover{background:var(--bg3)}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:600;color:#fff;flex-shrink:0;letter-spacing:.5px}
+.u-name{font-size:13px;font-weight:500;line-height:1.2}
+.u-role{font-size:11px;color:var(--text3)}
+.admin-tag{display:inline-block;background:var(--amber-bg);color:var(--amber);font-size:10px;font-weight:600;border-radius:4px;padding:1px 5px;letter-spacing:.3px}
 
-/* MAIN */
-#main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh}
-.topbar{height:58px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;position:sticky;top:0;z-index:50}
-.topbar-title{font-family:var(--font2);font-size:16px;font-weight:600;flex:1}
-.topbar-actions{display:flex;align-items:center;gap:8px}
-.search-box{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 12px;width:240px}
-.search-box input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font);font-size:13px;width:100%}
-.search-box input::placeholder{color:var(--text3)}
-.search-box svg{width:14px;height:14px;color:var(--text3);flex-shrink:0}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:.15s}
-.btn-primary{background:var(--accent);color:#fff}
-.btn-primary:hover{background:var(--accent2)}
-.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--bg3);color:var(--text)}
-.btn svg{width:14px;height:14px}
-.content{flex:1;padding:24px;overflow-y:auto}
-
-/* PAGES */
-.page{display:none}
+/* ─── MAIN ────────────────────────────── */
+#main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.topbar{height:54px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0}
+.tb-title{font-family:var(--font2);font-size:15px;font-weight:600;flex:1}
+.tb-crumbs{font-size:12px;color:var(--text3);flex:1}
+.tb-crumbs span{color:var(--text2)}
+.search-wrap{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:6px 11px;width:220px;transition:.15s}
+.search-wrap:focus-within{border-color:var(--accent);background:var(--bg4)}
+.search-wrap svg{width:13px;height:13px;color:var(--text3);flex-shrink:0}
+.search-wrap input{background:none;border:none;outline:none;color:var(--text);font-family:var(--font);font-size:13px;width:100%}
+.search-wrap input::placeholder{color:var(--text3)}
+.content{flex:1;overflow-y:auto;padding:22px}
+.page{display:none;animation:fadeIn .18s ease}
 .page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-/* CARDS */
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:20px}
-.card-sm{padding:16px}
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px}
-.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);padding:16px 18px;position:relative;overflow:hidden}
-.stat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.02),transparent);pointer-events:none}
-.stat-label{font-size:11.5px;color:var(--text3);font-weight:500;letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px}
-.stat-value{font-family:var(--font2);font-size:26px;font-weight:600;letter-spacing:-1px;line-height:1}
+/* ─── BUTTONS ─────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 14px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;white-space:nowrap;line-height:1}
+.btn svg{width:13px;height:13px;flex-shrink:0}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-h)}
+.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(224,86,86,.25)}
+.btn-danger:hover{background:rgba(224,86,86,.2)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{background:var(--bg3);color:var(--text);border-color:var(--border3)}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-xs{padding:3px 8px;font-size:11.5px;border-radius:6px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-icon{width:30px;height:30px;padding:0;border-radius:7px}
+
+/* ─── CARDS ───────────────────────────── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:18px}
+.card-p{padding:14px}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;position:relative;overflow:hidden;cursor:default}
+.stat-lbl{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.stat-val{font-family:var(--font2);font-size:24px;font-weight:600;line-height:1;letter-spacing:-.5px}
 .stat-sub{font-size:11.5px;color:var(--text3);margin-top:4px}
-.stat-icon{position:absolute;right:14px;top:14px;opacity:.18;width:28px;height:28px}
-.stat-blue .stat-value{color:var(--accent)}
-.stat-green .stat-value{color:var(--green)}
-.stat-amber .stat-value{color:var(--amber)}
-.stat-red .stat-value{color:var(--red)}
-.stat-purple .stat-value{color:var(--purple)}
+.s-blue .stat-val{color:var(--accent)}
+.s-green .stat-val{color:var(--green)}
+.s-amber .stat-val{color:var(--amber)}
+.s-red .stat-val{color:var(--red)}
+.s-purple .stat-val{color:var(--purple)}
 
-/* TABLE */
-.table-wrap{overflow-x:auto;border-radius:var(--radius2);border:1px solid var(--border)}
+/* ─── TABLE ───────────────────────────── */
+.tbl-wrap{border-radius:var(--r2);border:1px solid var(--border);overflow:hidden;overflow-x:auto}
 table{width:100%;border-collapse:collapse;background:var(--bg2)}
-th{padding:11px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.6px;text-transform:uppercase;border-bottom:1px solid var(--border);background:var(--bg3);white-space:nowrap}
-td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13.5px;vertical-align:middle}
+thead tr{background:var(--bg3)}
+th{padding:10px 13px;text-align:left;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.7px;text-transform:uppercase;white-space:nowrap;border-bottom:1px solid var(--border)}
+td{padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:13px}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--bg3)}
-.tr-link{cursor:pointer}
+tbody tr{transition:background .1s}
+tbody tr:hover td{background:var(--bg3)}
+.tbl-clickable{cursor:pointer}
+.td-main{font-weight:500}
+.td-sub{font-size:12px;color:var(--text3)}
+.td-mono{font-family:'SF Mono',monospace;font-size:12px}
+.td-actions{white-space:nowrap;text-align:right;display:flex;gap:5px;justify-content:flex-end}
 
-/* BADGES */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:500;white-space:nowrap}
-.badge-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.badge-green{background:var(--greenbg);color:var(--green)}
-.badge-green .badge-dot{background:var(--green)}
-.badge-amber{background:var(--amberbg);color:var(--amber)}
-.badge-amber .badge-dot{background:var(--amber)}
-.badge-red{background:var(--redbg);color:var(--red)}
-.badge-red .badge-dot{background:var(--red)}
-.badge-blue{background:var(--accentbg);color:var(--accent)}
-.badge-blue .badge-dot{background:var(--accent)}
-.badge-purple{background:var(--purplebg);color:var(--purple)}
-.badge-purple .badge-dot{background:var(--purple)}
-.badge-gray{background:rgba(255,255,255,.06);color:var(--text2)}
-.badge-gray .badge-dot{background:var(--text3)}
+/* ─── BADGES ──────────────────────────── */
+.bdg{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:11.5px;font-weight:500;white-space:nowrap;line-height:1.4}
+.bdg::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.bdg-green{background:var(--green-bg);color:var(--green)}.bdg-green::before{background:var(--green)}
+.bdg-amber{background:var(--amber-bg);color:var(--amber)}.bdg-amber::before{background:var(--amber)}
+.bdg-red{background:var(--red-bg);color:var(--red)}.bdg-red::before{background:var(--red)}
+.bdg-blue{background:var(--accent-bg);color:var(--accent)}.bdg-blue::before{background:var(--accent)}
+.bdg-purple{background:var(--purple-bg);color:var(--purple)}.bdg-purple::before{background:var(--purple)}
+.bdg-teal{background:var(--teal-bg);color:var(--teal)}.bdg-teal::before{background:var(--teal)}
+.bdg-gray{background:rgba(255,255,255,.06);color:var(--text2)}.bdg-gray::before{background:var(--text3)}
 
-/* FORMS */
-.form-grid{display:grid;gap:14px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-group{display:flex;flex-direction:column;gap:6px}
-.form-group label{font-size:12px;font-weight:500;color:var(--text2)}
-.form-group input,.form-group select,.form-group textarea{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font);font-size:13.5px;padding:9px 12px;outline:none;transition:.15s}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accentbg)}
-.form-group input::placeholder,.form-group textarea::placeholder{color:var(--text3)}
-.form-group select option{background:var(--bg3)}
-.form-group textarea{resize:vertical;min-height:80px}
+/* ─── FORMS ───────────────────────────── */
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:12px;font-weight:500;color:var(--text2)}
+.fg label .req{color:var(--red);margin-left:2px}
+.fg input,.fg select,.fg textarea{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--font);font-size:13px;padding:8px 11px;outline:none;transition:.15s;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--text3)}
+.fg select option{background:var(--bg3)}
+.fg textarea{resize:vertical;min-height:72px}
+.fg.disabled input,.fg.disabled select,.fg.disabled textarea{opacity:.5;cursor:not-allowed}
+.form-grid{display:grid;gap:13px}
+.form-2{grid-template-columns:1fr 1fr;gap:13px}
+.form-3{grid-template-columns:1fr 1fr 1fr;gap:13px}
+.form-err{font-size:12px;color:var(--red);margin-top:3px}
 
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.open{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto}
-.modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg2);z-index:1}
-.modal-title{font-family:var(--font2);font-size:15px;font-weight:600}
-.modal-close{width:28px;height:28px;border-radius:6px;background:none;border:none;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
-.modal-close:hover{background:var(--bg3);color:var(--text)}
-.modal-body{padding:20px 24px}
-.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+/* ─── MODAL ───────────────────────────── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(2px)}
+.overlay.open{display:flex;animation:fadeIn .15s}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r3);width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:var(--sh)}
+.modal-sm{max-width:420px}
+.modal-md{max-width:580px}
+.modal-lg{max-width:780px}
+.modal-xl{max-width:960px}
+.mh{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.m-title{font-family:var(--font2);font-size:15px;font-weight:600}
+.m-sub{font-size:12px;color:var(--text3);margin-top:1px}
+.mclose{width:26px;height:26px;border-radius:6px;background:none;border:none;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.15s}
+.mclose:hover{background:var(--bg4);color:var(--text)}
+.mb{padding:20px;overflow-y:auto;flex:1}
+.mf{padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.mf-left{flex:1}
 
-/* PROGRESS */
-.progress-bar{height:6px;background:var(--border);border-radius:4px;overflow:hidden;margin-top:4px}
-.progress-fill{height:100%;border-radius:4px;background:var(--accent);transition:width .4s}
-.progress-fill.green{background:var(--green)}
-.progress-fill.amber{background:var(--amber)}
+/* ─── TABS ────────────────────────────── */
+.tabs{display:flex;gap:2px;background:var(--bg3);border-radius:9px;padding:3px;margin-bottom:18px;border:1px solid var(--border)}
+.tab{flex:1;text-align:center;padding:7px 10px;border-radius:7px;font-size:12.5px;font-weight:500;cursor:pointer;color:var(--text3);transition:.15s;user-select:none}
+.tab.active{background:var(--bg2);color:var(--text);border:1px solid var(--border2)}
+.tab-content{display:none}.tab-content.active{display:block}
 
-/* TOASTS */
-#toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
-.toast{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px 16px;font-size:13.5px;min-width:260px;display:flex;align-items:center;gap:10px;animation:toastIn .2s ease;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-.toast.success{border-left:3px solid var(--green)}
-.toast.error{border-left:3px solid var(--red)}
-.toast.info{border-left:3px solid var(--accent)}
-@keyframes toastIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+/* ─── SECTION HEADER ─────────────────── */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.sec-title{font-family:var(--font2);font-size:16px;font-weight:600}
+.sec-count{font-size:12px;color:var(--text3);margin-top:1px}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.flt{padding:5px 11px;border-radius:7px;font-size:12px;font-weight:500;cursor:pointer;background:var(--bg3);border:1px solid var(--border);color:var(--text3);transition:.15s}
+.flt:hover{color:var(--text);border-color:var(--border3)}
+.flt.active{background:var(--accent-bg2);border-color:var(--accent);color:var(--accent)}
 
-/* SECTION HEADER */
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:12px;flex-wrap:wrap}
-.section-title{font-family:var(--font2);font-size:17px;font-weight:600}
-.section-sub{font-size:13px;color:var(--text3)}
-.filters{display:flex;gap:8px;flex-wrap:wrap}
-.filter-btn{padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:500;cursor:pointer;background:var(--bg3);border:1px solid var(--border);color:var(--text2);transition:.15s}
-.filter-btn:hover,.filter-btn.active{background:var(--accentbg);border-color:var(--accent);color:var(--accent)}
+/* ─── PROGRESS ────────────────────────── */
+.prog{height:5px;background:var(--border);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;border-radius:4px;background:var(--accent);transition:width .3s}
+.prog-fill.g{background:var(--green)}.prog-fill.a{background:var(--amber)}.prog-fill.r{background:var(--red)}
 
-/* DETAIL PANEL */
-.detail-grid{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
-.detail-label{font-size:11.5px;font-weight:500;color:var(--text3);margin-bottom:2px}
-.detail-value{font-size:13.5px;color:var(--text)}
-.info-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
-.info-row:last-child{border-bottom:none}
+/* ─── FILE UPLOAD ─────────────────────── */
+.drop-zone{border:2px dashed var(--border2);border-radius:var(--r2);padding:28px;text-align:center;cursor:pointer;transition:.2s;position:relative}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--accent);background:var(--accent-bg)}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-icon{width:36px;height:36px;margin:0 auto 10px;opacity:.4}
+.drop-title{font-size:13.5px;font-weight:500;margin-bottom:4px}
+.drop-sub{font-size:12px;color:var(--text3)}
+.file-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.file-item{display:flex;align-items:center;gap:10px;padding:8px 11px;background:var(--bg3);border:1px solid var(--border);border-radius:8px}
+.file-icon{width:28px;height:28px;border-radius:6px;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.file-icon svg{width:14px;height:14px;color:var(--accent)}
+.file-name{font-size:12.5px;font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-size{font-size:11.5px;color:var(--text3);flex-shrink:0}
+.file-remove{width:22px;height:22px;border-radius:5px;background:none;border:none;color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;font-size:14px;flex-shrink:0}
+.file-remove:hover{background:var(--red-bg);color:var(--red)}
+.file-type-sel{background:var(--bg4);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--font);font-size:12px;padding:4px 8px;outline:none;flex-shrink:0}
+.file-type-sel:focus{border-color:var(--accent)}
 
-/* LOADING */
-.spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:auto}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-state{text-align:center;padding:48px 24px;color:var(--text3)}
-.empty-state{text-align:center;padding:56px 24px;color:var(--text3)}
-.empty-icon{width:44px;height:44px;margin:0 auto 12px;opacity:.3}
-.empty-title{font-size:15px;font-weight:500;color:var(--text2);margin-bottom:4px}
+/* ─── DETAIL PANELS ───────────────────── */
+.dl-row{display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border)}
+.dl-row:last-child{border-bottom:none}
+.dl-lbl{font-size:11.5px;color:var(--text3);font-weight:500;flex-shrink:0;min-width:120px}
+.dl-val{font-size:13px;text-align:right;word-break:break-word}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.info-block{padding:10px 0;border-bottom:1px solid var(--border)}
+.info-block:nth-child(odd){padding-right:20px;border-right:1px solid var(--border)}
+.info-block:nth-child(even){padding-left:20px}
+.info-lbl{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.info-val{font-size:13.5px;font-weight:500}
 
-/* TIMELINE */
-.timeline{position:relative;padding-left:20px}
-.timeline::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--border)}
-.tl-item{position:relative;padding-bottom:20px}
-.tl-dot{width:12px;height:12px;border-radius:50%;background:var(--border2);border:2px solid var(--border);position:absolute;left:-20px;top:3px}
+/* ─── TIMELINE ────────────────────────── */
+.tl{position:relative;padding-left:22px}
+.tl::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:1px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:16px}
+.tl-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--border2);background:var(--bg3);position:absolute;left:-22px;top:2px}
 .tl-dot.done{background:var(--green);border-color:var(--green)}
-.tl-dot.active{background:var(--accent);border-color:var(--accent)}
-.tl-label{font-size:12px;font-weight:500;color:var(--text2)}
-.tl-date{font-size:11px;color:var(--text3)}
+.tl-dot.cur{background:var(--accent);border-color:var(--accent)}
+.tl-lbl{font-size:13px;font-weight:500;color:var(--text2)}
+.tl-date{font-size:11.5px;color:var(--text3)}
 
-/* RESPONSIVE */
-@media(max-width:768px){
-  #sidebar{transform:translateX(-100%)}
-  #sidebar.open{transform:translateX(0)}
-  #main{margin-left:0}
-  .form-row{grid-template-columns:1fr}
-  .detail-grid{grid-template-columns:1fr}
-  .stat-grid{grid-template-columns:repeat(2,1fr)}
-}
-.doc-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);font-size:12px;cursor:pointer;transition:.15s}
-.doc-chip:hover{border-color:var(--accent);color:var(--accent)}
-.doc-chip svg{width:13px;height:13px;flex-shrink:0}
+/* ─── TOASTS ──────────────────────────── */
+#toasts{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:7px;pointer-events:none}
+.toast{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:11px 14px;font-size:13px;display:flex;align-items:center;gap:9px;box-shadow:var(--sh);pointer-events:auto;min-width:240px;max-width:340px;animation:slideIn .2s ease}
+@keyframes slideIn{from{transform:translateX(16px);opacity:0}to{transform:translateX(0);opacity:1}}
+.toast.ok{border-left:3px solid var(--green)}.toast.err{border-left:3px solid var(--red)}.toast.info{border-left:3px solid var(--accent)}
+.toast-icon{width:16px;height:16px;flex-shrink:0}.toast-msg{flex:1}
+
+/* ─── CONFIRM ─────────────────────────── */
+#confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:600;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+#confirm-overlay.open{display:flex}
+.confirm-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r3);padding:24px;max-width:380px;width:100%;box-shadow:var(--sh);text-align:center}
+.confirm-icon{width:44px;height:44px;border-radius:50%;background:var(--red-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.confirm-icon svg{width:22px;height:22px;color:var(--red)}
+.confirm-title{font-family:var(--font2);font-size:16px;font-weight:600;margin-bottom:6px}
+.confirm-msg{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.5}
+.confirm-btns{display:flex;gap:10px;justify-content:center}
+
+/* ─── LOGIN ───────────────────────────── */
+#login-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:1000;align-items:center;justify-content:center}
+#login-screen.open{display:flex}
+.login-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r3);padding:36px 32px;width:100%;max-width:380px;box-shadow:var(--sh)}
+
+/* ─── MISC ────────────────────────────── */
+.empty{text-align:center;padding:50px 20px;color:var(--text3)}
+.empty-ico{width:40px;height:40px;margin:0 auto 10px;opacity:.25}
+.empty-t{font-size:15px;font-weight:500;color:var(--text2);margin-bottom:4px}
+.loading{text-align:center;padding:48px}
+.spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .65s linear infinite;margin:auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;font-size:12px;cursor:default}
+.section-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:14px;margin-bottom:12px}
+.section-box-title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.pct-bar-wrap{display:flex;align-items:center;gap:8px}
+.pct-bar-wrap .prog{flex:1}
+.pct-bar-wrap span{font-size:12px;color:var(--text3);width:32px;text-align:right}
+.admin-lock{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--text3);padding:2px 6px;border-radius:5px;background:var(--bg4);border:1px solid var(--border)}
+.admin-lock svg{width:10px;height:10px}
 </style>
 </head>
 <body>
 
+<!-- LOGIN -->
+<div id="login-screen" class="open">
+  <div class="login-box">
+    <div style="text-align:center;margin-bottom:28px">
+      <div style="width:52px;height:52px;background:var(--accent);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div style="font-family:var(--font2);font-size:22px;font-weight:700">VisaFlow</div>
+      <div style="font-size:13px;color:var(--text3);margin-top:3px">Gestão de Processos Migratórios</div>
+    </div>
+    <div class="form-grid" style="gap:12px">
+      <div class="fg"><label>Email</label><input type="email" id="l-email" value="admin@visaflow.ao" placeholder="email@exemplo.com"/></div>
+      <div class="fg"><label>Password</label><input type="password" id="l-pass" value="Admin@1234" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+      <div id="l-err" style="font-size:12.5px;color:var(--red);display:none;text-align:center"></div>
+      <button class="btn btn-primary" style="width:100%;padding:10px;margin-top:4px;font-size:14px" onclick="doLogin()" id="l-btn">Entrar</button>
+    </div>
+  </div>
+</div>
+
 <!-- SIDEBAR -->
 <div id="sidebar">
   <div class="logo">
-    <div class="logo-icon">
-      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-    </div>
-    <span class="logo-text">Visa<span>Flow</span></span>
+    <div class="logo-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+    <span class="logo-text">Visa<b>Flow</b></span>
   </div>
   <nav>
-    <div class="nav-section">Principal</div>
-    <div class="nav-item active" onclick="navigate('dashboard')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    <div class="nav-sep">Principal</div>
+    <div class="nav-item active" id="nav-dashboard" onclick="goPage('dashboard',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </div>
-    <div class="nav-section">Gestão</div>
-    <div class="nav-item" onclick="navigate('clientes')">
+    <div class="nav-sep">Gestão</div>
+    <div class="nav-item" id="nav-clientes" onclick="goPage('clientes',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       Clientes
-      <span class="nav-badge" id="nb-clientes">—</span>
+      <span class="nav-badge" id="nb-c">—</span>
     </div>
-    <div class="nav-item" onclick="navigate('processos')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    <div class="nav-item" id="nav-processos" onclick="goPage('processos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       Processos
-      <span class="nav-badge" id="nb-processos">—</span>
+      <span class="nav-badge" id="nb-p">—</span>
     </div>
-    <div class="nav-item" onclick="navigate('pagamentos')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+    <div class="nav-item" id="nav-pagamentos" onclick="goPage('pagamentos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
       Pagamentos
     </div>
-    <div class="nav-item" onclick="navigate('documentos')">
+    <div class="nav-item" id="nav-documentos" onclick="goPage('documentos',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
       Documentos
     </div>
+    <div class="nav-sep">Conta</div>
+    <div class="nav-item" onclick="openChgPwd()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Alterar Password
+    </div>
+    <div class="nav-item" onclick="doLogout()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sair
+    </div>
   </nav>
   <div class="sidebar-footer">
-    <div class="user-pill" id="user-pill">
-      <div class="avatar" id="user-avatar">AD</div>
+    <div class="user-card">
+      <div class="avatar" id="ua">AD</div>
       <div>
-        <div class="user-name" id="user-name">Carregando...</div>
-        <div class="user-role" id="user-role">—</div>
+        <div class="u-name" id="un">—</div>
+        <div class="u-role" id="ur">—</div>
       </div>
     </div>
   </div>
@@ -238,730 +323,951 @@ tr:hover td{background:var(--bg3)}
 <!-- MAIN -->
 <div id="main">
   <div class="topbar">
-    <span class="topbar-title" id="topbar-title">Dashboard</span>
-    <div class="topbar-actions">
-      <div class="search-box" id="search-box" style="display:none">
+    <div id="tb-left" style="flex:1;display:flex;align-items:center;gap:10px">
+      <span class="tb-title" id="tb-title">Dashboard</span>
+      <span id="tb-admin-badge" style="display:none"><span class="admin-tag">ADMIN</span></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="search-wrap" id="srch-wrap" style="display:none">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="search-input" placeholder="Pesquisar..." oninput="handleSearch(this.value)"/>
+        <input type="text" id="srch" placeholder="Pesquisar..." oninput="onSearch(this.value)"/>
       </div>
-      <button class="btn btn-primary" id="topbar-btn" style="display:none" onclick="openCreateModal()">
+      <button class="btn btn-primary" id="tb-new" style="display:none" onclick="handleNew()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        <span id="topbar-btn-label">Novo</span>
+        <span id="tb-new-lbl">Novo</span>
       </button>
     </div>
   </div>
-  <div class="content">
 
+  <div class="content">
     <!-- DASHBOARD -->
-    <div id="page-dashboard" class="page active">
-      <div id="dash-content"><div class="loading-state"><div class="spinner"></div><p style="margin-top:12px">A carregar...</p></div></div>
+    <div class="page active" id="page-dashboard">
+      <div id="dash-body"><div class="loading"><div class="spinner"></div></div></div>
     </div>
 
     <!-- CLIENTES -->
-    <div id="page-clientes" class="page">
-      <div class="section-header">
-        <div><div class="section-title">Clientes</div><div class="section-sub" id="clientes-count">—</div></div>
+    <div class="page" id="page-clientes">
+      <div class="sec-hdr">
+        <div><div class="sec-title">Clientes</div><div class="sec-count" id="c-count"></div></div>
         <div class="filters">
-          <div class="filter-btn active" onclick="filterClientes('all',this)">Todos</div>
-          <div class="filter-btn" onclick="filterClientes('activo',this)">Activos</div>
-          <div class="filter-btn" onclick="filterClientes('inactivo',this)">Inactivos</div>
+          <div class="flt active" onclick="cFlt('all',this)">Todos</div>
+          <div class="flt" onclick="cFlt('activo',this)">Activos</div>
+          <div class="flt" onclick="cFlt('inactivo',this)">Inactivos</div>
         </div>
       </div>
-      <div class="table-wrap" id="clientes-table"><div class="loading-state"><div class="spinner"></div></div></div>
+      <div id="c-body"><div class="loading"><div class="spinner"></div></div></div>
     </div>
 
     <!-- PROCESSOS -->
-    <div id="page-processos" class="page">
-      <div class="section-header">
-        <div><div class="section-title">Processos</div><div class="section-sub" id="processos-count">—</div></div>
-        <div class="filters" id="processos-filters">
-          <div class="filter-btn active" onclick="filterProcessos('',this)">Todos</div>
-          <div class="filter-btn" onclick="filterProcessos('Pendente',this)">Pendente</div>
-          <div class="filter-btn" onclick="filterProcessos('EmAnalise',this)">Em Análise</div>
-          <div class="filter-btn" onclick="filterProcessos('Aprovado',this)">Aprovado</div>
-          <div class="filter-btn" onclick="filterProcessos('Rejeitado',this)">Rejeitado</div>
-          <div class="filter-btn" onclick="filterProcessos('Concluido',this)">Concluído</div>
+    <div class="page" id="page-processos">
+      <div class="sec-hdr">
+        <div><div class="sec-title">Processos</div><div class="sec-count" id="p-count"></div></div>
+        <div class="filters" id="p-flts">
+          <div class="flt active" onclick="pFlt('',this)">Todos</div>
+          <div class="flt" onclick="pFlt('Pendente',this)">Pendente</div>
+          <div class="flt" onclick="pFlt('EmAnalise',this)">Em Análise</div>
+          <div class="flt" onclick="pFlt('Agendado',this)">Agendado</div>
+          <div class="flt" onclick="pFlt('Aprovado',this)">Aprovado</div>
+          <div class="flt" onclick="pFlt('Concluido',this)">Concluído</div>
+          <div class="flt" onclick="pFlt('Rejeitado',this)">Rejeitado</div>
         </div>
       </div>
-      <div class="table-wrap" id="processos-table"><div class="loading-state"><div class="spinner"></div></div></div>
+      <div id="p-body"><div class="loading"><div class="spinner"></div></div></div>
     </div>
 
     <!-- PAGAMENTOS -->
-    <div id="page-pagamentos" class="page">
-      <div class="section-header">
-        <div><div class="section-title">Pagamentos</div><div class="section-sub" id="pagamentos-count">—</div></div>
+    <div class="page" id="page-pagamentos">
+      <div class="sec-hdr">
+        <div><div class="sec-title">Pagamentos</div><div class="sec-count" id="pg-count"></div></div>
       </div>
-      <div id="pagamentos-dash-stats" style="margin-bottom:18px"></div>
-      <div class="table-wrap" id="pagamentos-table"><div class="loading-state"><div class="spinner"></div></div></div>
+      <div id="pg-stats"></div>
+      <div id="pg-body"><div class="loading"><div class="spinner"></div></div></div>
     </div>
 
     <!-- DOCUMENTOS -->
-    <div id="page-documentos" class="page">
-      <div class="section-header">
-        <div><div class="section-title">Documentos</div><div class="section-sub">Todos os documentos dos processos</div></div>
+    <div class="page" id="page-documentos">
+      <div class="sec-hdr">
+        <div><div class="sec-title">Documentos</div><div class="sec-count" id="d-count"></div></div>
         <div class="filters">
-          <div class="filter-btn active" onclick="filterDocs('all',this)">Todos</div>
-          <div class="filter-btn" onclick="filterDocs('Pendente',this)">Pendentes</div>
-          <div class="filter-btn" onclick="filterDocs('Entregue',this)">Entregues</div>
-          <div class="filter-btn" onclick="filterDocs('Invalido',this)">Inválidos</div>
+          <div class="flt active" onclick="dFlt('all',this)">Todos</div>
+          <div class="flt" onclick="dFlt('Pendente',this)">Pendente</div>
+          <div class="flt" onclick="dFlt('Entregue',this)">Entregue</div>
+          <div class="flt" onclick="dFlt('Invalido',this)">Inválido</div>
         </div>
       </div>
-      <div class="table-wrap" id="documentos-table"><div class="loading-state"><div class="spinner"></div></div></div>
-    </div>
-
-  </div>
-</div>
-
-<!-- LOGIN MODAL -->
-<div class="modal-overlay open" id="login-modal">
-  <div class="modal" style="max-width:400px">
-    <div class="modal-header" style="justify-content:center;border:none;padding-bottom:0">
-      <div style="text-align:center;width:100%">
-        <div style="width:48px;height:48px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
-        <div style="font-family:var(--font2);font-size:20px;font-weight:700">VisaFlow</div>
-        <div style="font-size:13px;color:var(--text3);margin-top:4px">Sistema de Gestão Migratória</div>
-      </div>
-    </div>
-    <div class="modal-body" style="padding-top:24px">
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="login-email" placeholder="admin@visaflow.ao" value="admin@visaflow.ao"/>
-        </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="login-pass" placeholder="••••••••" value="Admin@1234" onkeydown="if(e.key==='Enter')doLogin()"/>
-        </div>
-        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:11px" onclick="doLogin()" id="login-btn">
-          Entrar
-        </button>
-        <div id="login-err" style="font-size:12.5px;color:var(--red);text-align:center;display:none"></div>
-      </div>
+      <div id="d-body"><div class="loading"><div class="spinner"></div></div></div>
     </div>
   </div>
 </div>
 
-<!-- CREATE CLIENT MODAL -->
-<div class="modal-overlay" id="modal-cliente">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title" id="mc-title">Novo Cliente</span><button class="modal-close" onclick="closeModal('modal-cliente')">✕</button></div>
-    <div class="modal-body">
+<!-- ═══════════════════════════════ MODALS ═══════════════════════════════ -->
+
+<!-- CLIENTE MODAL (create/edit) -->
+<div class="overlay" id="m-cliente">
+  <div class="modal modal-md">
+    <div class="mh"><div><div class="m-title" id="mc-t">Novo Cliente</div></div><button class="mclose" onclick="closeM('m-cliente')">✕</button></div>
+    <div class="mb">
       <div class="form-grid">
-        <div class="form-row">
-          <div class="form-group"><label>Nome completo *</label><input id="c-nome" placeholder="ex: João Silva"/></div>
-          <div class="form-group"><label>Número BI</label><input id="c-bi" placeholder="ex: 001234567LA041"/></div>
+        <div class="form-2">
+          <div class="fg"><label>Nome <span class="req">*</span></label><input id="c-nome" placeholder="Nome completo"/></div>
+          <div class="fg"><label>Nº BI / Passaporte</label><input id="c-bi" placeholder="001234567LA041"/></div>
         </div>
-        <div class="form-row">
-          <div class="form-group"><label>Email</label><input type="email" id="c-email" placeholder="joao@email.com"/></div>
-          <div class="form-group"><label>Telefone</label><input id="c-tel" placeholder="+244 9XX XXX XXX"/></div>
+        <div class="form-2">
+          <div class="fg"><label>Email</label><input type="email" id="c-email" placeholder="email@exemplo.com"/></div>
+          <div class="fg"><label>Telefone</label><input id="c-tel" placeholder="+244 9XX XXX XXX"/></div>
         </div>
-        <div class="form-group"><label>Nacionalidade</label><input id="c-nac" placeholder="ex: Angolana"/></div>
-        <div class="form-group"><label>Observações</label><textarea id="c-obs" placeholder="Notas adicionais..."></textarea></div>
+        <div class="fg"><label>Nacionalidade</label><input id="c-nac" placeholder="ex: Angolana"/></div>
+        <div class="fg"><label>Observações</label><textarea id="c-obs" placeholder="Notas internas..."></textarea></div>
+        <div class="fg" id="c-activo-wrap" style="display:none">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="c-activo" style="width:auto"/> Conta activa
+          </label>
+        </div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-cliente')">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveCliente()" id="save-cliente-btn">Guardar</button>
-    </div>
+    <div class="mf"><div class="mf-left" id="mc-lock"></div><button class="btn btn-ghost" onclick="closeM('m-cliente')">Cancelar</button><button class="btn btn-primary" id="mc-save" onclick="saveCliente()">Guardar</button></div>
   </div>
 </div>
 
-<!-- CREATE PROCESSO MODAL -->
-<div class="modal-overlay" id="modal-processo">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">Novo Processo</span><button class="modal-close" onclick="closeModal('modal-processo')">✕</button></div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="form-group"><label>Cliente *</label>
-          <select id="p-cliente"><option value="">Seleccionar cliente...</option></select>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>Tipo *</label>
-            <select id="p-tipo">
-              <option value="">Seleccionar...</option>
-              <option>VistoTrabalho</option><option>VistoEstudo</option>
-              <option>Passaporte</option><option>Legalizacao</option><option>ReagrupamentoFamiliar</option>
+<!-- PROCESSO MODAL (create/edit) — with tabs -->
+<div class="overlay" id="m-processo">
+  <div class="modal modal-lg">
+    <div class="mh"><div><div class="m-title" id="mp-t">Novo Processo</div><div class="m-sub" id="mp-sub"></div></div><button class="mclose" onclick="closeM('m-processo')">✕</button></div>
+    <div class="mb">
+      <div class="tabs" id="proc-tabs">
+        <div class="tab active" onclick="switchTab('t-info',this)">Informações</div>
+        <div class="tab" onclick="switchTab('t-docs',this)" id="tab-docs">Documentos</div>
+      </div>
+      <!-- TAB INFO -->
+      <div class="tab-content active" id="t-info">
+        <div class="form-grid">
+          <div class="form-2">
+            <div class="fg"><label>Cliente <span class="req">*</span></label><select id="p-cliente"><option value="">Seleccionar cliente...</option></select></div>
+            <div class="fg"><label>Tipo de Processo <span class="req">*</span></label>
+              <select id="p-tipo" onchange="updateDocChecklist()">
+                <option value="">Seleccionar tipo...</option>
+                <option>VistoTrabalho</option><option>VistoEstudo</option>
+                <option>Passaporte</option><option>Legalizacao</option><option>ReagrupamentoFamiliar</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-2">
+            <div class="fg"><label>País Destino</label><input id="p-pais" placeholder="ex: Portugal"/></div>
+            <div class="fg"><label>Valor Total (AOA)</label><input type="number" id="p-valor" placeholder="0.00" min="0"/></div>
+          </div>
+          <div class="fg"><label>Data de Agendamento</label><input type="datetime-local" id="p-data"/></div>
+          <div class="fg" id="p-estado-wrap"><label>Estado</label>
+            <select id="p-estado">
+              <option value="Pendente">Pendente</option><option value="EmAnalise">Em Análise</option>
+              <option value="Agendado">Agendado</option><option value="Aprovado">Aprovado</option>
+              <option value="Concluido">Concluído</option><option value="Rejeitado">Rejeitado</option>
             </select>
           </div>
-          <div class="form-group"><label>País Destino</label><input id="p-pais" placeholder="ex: Portugal"/></div>
+          <div class="fg"><label>Observações</label><textarea id="p-obs" placeholder="Notas do processo..."></textarea></div>
         </div>
-        <div class="form-row">
-          <div class="form-group"><label>Valor Total (AOA)</label><input type="number" id="p-valor" placeholder="0.00"/></div>
-          <div class="form-group"><label>Data Agendamento</label><input type="datetime-local" id="p-data"/></div>
+      </div>
+      <!-- TAB DOCS -->
+      <div class="tab-content" id="t-docs">
+        <div id="checklist-box" style="margin-bottom:14px"></div>
+        <div class="drop-zone" id="dz">
+          <input type="file" id="dz-input" multiple accept=".pdf,.jpg,.jpeg,.png,.docx" onchange="onFilePick(this.files)"/>
+          <div class="drop-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+          <div class="drop-title">Arrastar ficheiros ou clicar para seleccionar</div>
+          <div class="drop-sub">PDF, JPG, PNG, DOCX — máx. 10 MB por ficheiro</div>
         </div>
-        <div class="form-group"><label>Observações</label><textarea id="p-obs"></textarea></div>
+        <div id="file-list" class="file-list"></div>
+        <div style="margin-top:10px;font-size:12px;color:var(--text3)" id="upload-note">Os documentos serão associados ao processo após criação.</div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-processo')">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveProcesso()">Criar Processo</button>
-    </div>
+    <div class="mf"><div class="mf-left" id="mp-lock"></div><button class="btn btn-ghost" onclick="closeM('m-processo')">Cancelar</button><button class="btn btn-primary" id="mp-save" onclick="saveProcesso()">Criar Processo</button></div>
   </div>
 </div>
 
-<!-- CREATE PAGAMENTO MODAL -->
-<div class="modal-overlay" id="modal-pagamento">
-  <div class="modal" style="max-width:420px">
-    <div class="modal-header"><span class="modal-title">Registar Pagamento</span><button class="modal-close" onclick="closeModal('modal-pagamento')">✕</button></div>
-    <div class="modal-body">
+<!-- PAGAMENTO MODAL -->
+<div class="overlay" id="m-pagamento">
+  <div class="modal modal-sm">
+    <div class="mh"><div><div class="m-title">Registar Pagamento</div></div><button class="mclose" onclick="closeM('m-pagamento')">✕</button></div>
+    <div class="mb">
       <div class="form-grid">
-        <div class="form-group"><label>Processo *</label>
-          <select id="pg-processo"><option value="">Seleccionar processo...</option></select>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>Valor (AOA) *</label><input type="number" id="pg-valor" placeholder="0.00"/></div>
-          <div class="form-group"><label>Método *</label>
-            <select id="pg-metodo">
-              <option value="">Seleccionar...</option>
-              <option>Cash</option><option>Transferencia</option><option>TPA</option><option>MobileMoney</option>
-            </select>
+        <div class="fg"><label>Processo <span class="req">*</span></label><select id="pg-proc"><option value="">Seleccionar...</option></select></div>
+        <div class="form-2">
+          <div class="fg"><label>Valor (AOA) <span class="req">*</span></label><input type="number" id="pg-val" placeholder="0.00" min="0" oninput="calcSaldoPreview()"/></div>
+          <div class="fg"><label>Método <span class="req">*</span></label>
+            <select id="pg-met"><option value="">—</option><option>Cash</option><option>Transferencia</option><option>TPA</option><option>MobileMoney</option></select>
           </div>
         </div>
-        <div class="form-group"><label>Referência / Comprovativo</label><input id="pg-ref" placeholder="ex: TRF-20240112"/></div>
-        <div class="form-group"><label>Observação</label><textarea id="pg-obs" style="min-height:60px"></textarea></div>
+        <div id="pg-preview" style="font-size:12.5px;color:var(--text3)"></div>
+        <div class="fg"><label>Referência / Comprovativo</label><input id="pg-ref" placeholder="ex: TRF-20240112"/></div>
+        <div class="fg"><label>Observação</label><textarea id="pg-obs" style="min-height:60px"></textarea></div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modal-pagamento')">Cancelar</button>
-      <button class="btn btn-primary" onclick="savePagamento()">Registar</button>
+    <div class="mf"><button class="btn btn-ghost" onclick="closeM('m-pagamento')">Cancelar</button><button class="btn btn-primary" onclick="savePagamento()">Registar</button></div>
+  </div>
+</div>
+
+<!-- DOC STATUS MODAL -->
+<div class="overlay" id="m-doc-status">
+  <div class="modal modal-sm">
+    <div class="mh"><div><div class="m-title" id="mds-t">Actualizar Documento</div></div><button class="mclose" onclick="closeM('m-doc-status')">✕</button></div>
+    <div class="mb">
+      <div class="form-grid">
+        <div class="fg"><label>Status</label>
+          <select id="ds-status"><option value="Pendente">Pendente</option><option value="Entregue">Entregue</option><option value="Invalido">Inválido</option></select>
+        </div>
+        <div class="fg"><label>Observação</label><textarea id="ds-obs" placeholder="Motivo de rejeição ou nota..."></textarea></div>
+      </div>
     </div>
+    <div class="mf"><button class="btn btn-ghost" onclick="closeM('m-doc-status')">Cancelar</button><button class="btn btn-primary" onclick="saveDocStatus()">Guardar</button></div>
   </div>
 </div>
 
 <!-- DETAIL MODAL -->
-<div class="modal-overlay" id="modal-detail">
-  <div class="modal" style="max-width:680px">
-    <div class="modal-header"><span class="modal-title" id="detail-title">Detalhes</span><button class="modal-close" onclick="closeModal('modal-detail')">✕</button></div>
-    <div class="modal-body" id="detail-body"></div>
+<div class="overlay" id="m-detail">
+  <div class="modal modal-xl">
+    <div class="mh"><div><div class="m-title" id="md-t">Detalhes</div><div class="m-sub" id="md-s"></div></div><button class="mclose" onclick="closeM('m-detail')">✕</button></div>
+    <div class="mb" id="md-body"></div>
+    <div class="mf" id="md-foot"></div>
   </div>
 </div>
 
-<div id="toast-container"></div>
+<!-- CHANGE PASSWORD -->
+<div class="overlay" id="m-pwd">
+  <div class="modal modal-sm">
+    <div class="mh"><div><div class="m-title">Alterar Password</div></div><button class="mclose" onclick="closeM('m-pwd')">✕</button></div>
+    <div class="mb">
+      <div class="form-grid">
+        <div class="fg"><label>Password Actual</label><input type="password" id="pwd-cur" placeholder="••••••••"/></div>
+        <div class="fg"><label>Nova Password</label><input type="password" id="pwd-new" placeholder="mín. 8 caracteres"/></div>
+        <div class="fg"><label>Confirmar Nova Password</label><input type="password" id="pwd-cnf" placeholder="••••••••"/></div>
+        <div id="pwd-err" style="font-size:12.5px;color:var(--red);display:none"></div>
+      </div>
+    </div>
+    <div class="mf"><button class="btn btn-ghost" onclick="closeM('m-pwd')">Cancelar</button><button class="btn btn-primary" onclick="savePwd()">Guardar</button></div>
+  </div>
+</div>
 
+<!-- CONFIRM -->
+<div id="confirm-overlay">
+  <div class="confirm-box">
+    <div class="confirm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></div>
+    <div class="confirm-title" id="conf-t">Confirmar Eliminação</div>
+    <div class="confirm-msg" id="conf-m">Esta acção é irreversível.</div>
+    <div class="confirm-btns">
+      <button class="btn btn-ghost" onclick="closeConfirm()">Cancelar</button>
+      <button class="btn btn-danger" id="conf-ok">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<!-- ═══════════════════════════════ SCRIPT ═══════════════════════════════ -->
 <script>
-const API = 'https://visaflow-latest.onrender.com/api';
-let TOKEN = localStorage.getItem('vf_token') || '';
-let CURRENT_PAGE = 'dashboard';
-let USER_DATA = null;
-let ALL_CLIENTES = [];
-let ALL_PROCESSOS = [];
-let ALL_PAGAMENTOS = [];
-let ALL_DOCS = [];
-let FILTER_ESTADO = '';
-let FILTER_DOCS = 'all';
-let FILTER_CLIENTES = 'all';
-let SEARCH_Q = '';
+const API='https://visaflow-latest.onrender.com/api';
+let T='';
+let ME=null;
+let isAdmin=false;
 
-const h = (s,c='')=>`<span style="color:${c}">${s}</span>`;
-const fmt = v=>new Intl.NumberFormat('pt-AO',{style:'currency',currency:'AOA',maximumFractionDigits:0}).format(v||0);
+// ── STATE ──────────────────────────────────────────
+let S={
+  clientes:[],processos:[],pagamentos:[],docs:[],
+  cFlt:'all',pFlt:'',dFlt:'all',q:'',
+  editClienteId:null,editProcessoId:null,editDocId:null,
+  pendingFiles:[],
+  confirmCb:null,
+  pgProcessos:[],// for pagamento dropdown
+};
 
-async function api(path,method='GET',body=null){
-  const opts={method,headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN}};
-  if(body)opts.body=JSON.stringify(body);
+// ── API ────────────────────────────────────────────
+async function api(path,method='GET',body=null,isForm=false){
+  const opts={method,headers:{'Authorization':'Bearer '+T}};
+  if(isForm){opts.body=body;}
+  else{opts.headers['Content-Type']='application/json';if(body)opts.body=JSON.stringify(body);}
   const r=await fetch(API+path,opts);
-  if(r.status===401){logout();throw new Error('Não autorizado');}
-  if(!r.ok){const e=await r.text().catch(()=>'');throw new Error(e||r.statusText);}
-  const txt=await r.text();
-  return txt?JSON.parse(txt):null;
+  if(r.status===401){doLogout();throw new Error('Sessão expirada');}
+  if(r.status===403)throw new Error('Sem permissão (requer Admin)');
+  if(!r.ok){let e='Erro '+r.status;try{const j=await r.json();e=j.message||j.title||JSON.stringify(j);}catch{try{e=await r.text();}catch{}}throw new Error(e);}
+  const txt=await r.text();return txt?JSON.parse(txt):null;
 }
+
+// ── UTILS ──────────────────────────────────────────
+const $ = id=>document.getElementById(id);
+const fmtAOA = v=>new Intl.NumberFormat('pt-AO',{style:'currency',currency:'AOA',maximumFractionDigits:0}).format(v||0);
+const fmtDate = d=>{if(!d)return'—';const dt=new Date(d);return isNaN(dt)?'—':dt.toLocaleDateString('pt-PT',{day:'2-digit',month:'short',year:'numeric'});};
+const fmtDT = d=>{if(!d)return'—';const dt=new Date(d);return isNaN(dt)?'—':dt.toLocaleDateString('pt-PT',{day:'2-digit',month:'short',year:'numeric'})+' '+dt.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});};
+const fmtBytes = b=>{if(!b||b<0)return'—';if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(0)+'KB';return(b/1048576).toFixed(1)+'MB';};
+const initials = n=>n?n.split(' ').filter(Boolean).map(x=>x[0]).join('').slice(0,2).toUpperCase():'?';
+const esc = s=>String(s||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 function toast(msg,type='info'){
   const el=document.createElement('div');
   el.className=`toast ${type}`;
-  el.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${type==='success'?'var(--green)':type==='error'?'var(--red)':'var(--accent)'}"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${msg}`;
-  document.getElementById('toast-container').appendChild(el);
-  setTimeout(()=>el.remove(),3000);
+  const icons={ok:'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',err:'<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',info:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'};
+  const cols={ok:'var(--green)',err:'var(--red)',info:'var(--accent)'};
+  el.innerHTML=`<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="${cols[type]||cols.info}" stroke-width="2">${icons[type]||icons.info}</svg><span class="toast-msg">${esc(msg)}</span>`;
+  $('toasts').appendChild(el);setTimeout(()=>el.remove(),4000);
 }
 
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-function openModal(id){document.getElementById(id).classList.add('open');}
+function openM(id){$(id).classList.add('open');}
+function closeM(id){$(id).classList.remove('open');}
+function openConfirm(title,msg,cb){
+  $('conf-t').textContent=title;$('conf-m').textContent=msg;
+  S.confirmCb=cb;$('confirm-overlay').classList.add('open');
+}
+function closeConfirm(){$('confirm-overlay').classList.remove('open');S.confirmCb=null;}
+$('conf-ok').onclick=()=>{if(S.confirmCb)S.confirmCb();closeConfirm();};
 
-// AUTH
+// Click outside modal
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeM(o.id);}));
+
+// ── AUTH ───────────────────────────────────────────
 async function doLogin(){
-  const btn=document.getElementById('login-btn');
-  const err=document.getElementById('login-err');
-  err.style.display='none';
+  const btn=$('l-btn');$('l-err').style.display='none';
   btn.textContent='A entrar...';btn.disabled=true;
   try{
     const r=await fetch(API+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email:document.getElementById('login-email').value,password:document.getElementById('login-pass').value})});
-    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.message||'Credenciais inválidas');}
+      body:JSON.stringify({email:$('l-email').value,password:$('l-pass').value})});
+    if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.message||'Credenciais inválidas');}
     const d=await r.json();
-    TOKEN=d.token;localStorage.setItem('vf_token',TOKEN);
-    USER_DATA=d;
-    document.getElementById('user-name').textContent=d.nome;
-    document.getElementById('user-role').textContent=d.role;
-    document.getElementById('user-avatar').textContent=d.nome.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
-    closeModal('login-modal');
+    T=d.token;localStorage.setItem('vf_t',T);
+    ME=d;isAdmin=d.role==='Admin';
+    applyUserUI();
+    $('login-screen').classList.remove('open');
     initApp();
-  }catch(e){err.textContent=e.message;err.style.display='block';}
+  }catch(e){$('l-err').textContent=e.message;$('l-err').style.display='block';}
   finally{btn.textContent='Entrar';btn.disabled=false;}
 }
 
-function logout(){TOKEN='';localStorage.removeItem('vf_token');location.reload();}
-
-async function initApp(){
-  if(!TOKEN){openModal('login-modal');return;}
-  try{
-    const me=await api('/auth/me');
-    USER_DATA=me;
-    document.getElementById('user-name').textContent=me.nome;
-    document.getElementById('user-role').textContent=me.role;
-    document.getElementById('user-avatar').textContent=me.nome.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
-  }catch{}
-  loadDashboard();
-  loadClientes();
-  loadProcessos();
-  loadPagamentos();
-  loadDocumentos();
+function applyUserUI(){
+  $('ua').textContent=initials(ME.nome);
+  $('un').textContent=ME.nome;
+  $('ur').textContent=ME.role;
+  if(isAdmin)$('tb-admin-badge').style.display='inline-flex';
 }
 
-// NAV
-function navigate(page){
-  CURRENT_PAGE=page;
+function doLogout(){T='';ME=null;isAdmin=false;localStorage.removeItem('vf_t');location.reload();}
+
+// ── NAVIGATION ─────────────────────────────────────
+let CURPAGE='dashboard';
+function goPage(page,navEl){
+  CURPAGE=page;
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  event.currentTarget.classList.add('active');
-  const titles={dashboard:'Dashboard',clientes:'Clientes',processos:'Processos',pagamentos:'Pagamentos',documentos:'Documentos'};
-  document.getElementById('topbar-title').textContent=titles[page];
-  const sb=document.getElementById('search-box');
-  const bb=document.getElementById('topbar-btn');
-  const bl=document.getElementById('topbar-btn-label');
-  sb.style.display=page!=='dashboard'?'flex':'none';
-  bb.style.display=['clientes','processos','pagamentos'].includes(page)?'inline-flex':'none';
-  if(page==='clientes')bl.textContent='Novo Cliente';
-  if(page==='processos')bl.textContent='Novo Processo';
-  if(page==='pagamentos')bl.textContent='Novo Pagamento';
-  document.getElementById('search-input').value='';
-  SEARCH_Q='';
+  $('page-'+page).classList.add('active');
+  if(navEl)navEl.classList.add('active');
+  else $('nav-'+page).classList.add('active');
+  const TITLES={dashboard:'Dashboard',clientes:'Clientes',processos:'Processos',pagamentos:'Pagamentos',documentos:'Documentos'};
+  $('tb-title').textContent=TITLES[page]||page;
+  const hasSearch=['clientes','processos','pagamentos','documentos'].includes(page);
+  $('srch-wrap').style.display=hasSearch?'flex':'none';
+  $('srch').value='';S.q='';
+  const hasBtnMap={clientes:'Novo Cliente',processos:'Novo Processo',pagamentos:'Novo Pagamento'};
+  if(hasBtnMap[page]){$('tb-new').style.display='inline-flex';$('tb-new-lbl').textContent=hasBtnMap[page];}
+  else $('tb-new').style.display='none';
+  rerenderPage(page);
+}
+function handleNew(){
+  if(CURPAGE==='clientes')openClienteModal();
+  else if(CURPAGE==='processos')openProcessoModal();
+  else if(CURPAGE==='pagamentos')openPgModal();
+}
+function onSearch(v){S.q=v.toLowerCase();rerenderPage(CURPAGE);}
+function rerenderPage(p){
+  if(p==='clientes')renderClientes();
+  else if(p==='processos')renderProcessos();
+  else if(p==='pagamentos')renderPagamentos();
+  else if(p==='documentos')renderDocs();
 }
 
-function openCreateModal(){
-  if(CURRENT_PAGE==='clientes')openClienteModal();
-  else if(CURRENT_PAGE==='processos')openProcessoModal();
-  else if(CURRENT_PAGE==='pagamentos')openPagamentoModal();
+// ── BADGE HELPERS ──────────────────────────────────
+const ESTADO_LABELS={Pendente:'Pendente',EmAnalise:'Em Análise',Agendado:'Agendado',Aprovado:'Aprovado',Concluido:'Concluído',Rejeitado:'Rejeitado'};
+const ESTADO_COLS={Pendente:'amber',EmAnalise:'blue',Agendado:'purple',Aprovado:'teal',Concluido:'green',Rejeitado:'red'};
+const PG_COLS={Pago:'green',Parcial:'amber',Pendente:'red'};
+const DOC_COLS={Entregue:'green',Invalido:'red',Pendente:'amber'};
+const DOC_LABELS={Invalido:'Inválido'};
+const estadoBdg=e=>`<span class="bdg bdg-${ESTADO_COLS[e]||'gray'}">${ESTADO_LABELS[e]||e}</span>`;
+const pgBdg=e=>`<span class="bdg bdg-${PG_COLS[e]||'gray'}">${e||'—'}</span>`;
+const docBdg=s=>`<span class="bdg bdg-${DOC_COLS[s]||'gray'}">${DOC_LABELS[s]||s}</span>`;
+
+function adminActions(editCb,delCb,extraHtml=''){
+  if(!isAdmin)return`<div class="td-actions">${extraHtml}</div>`;
+  return`<div class="td-actions">${extraHtml}
+    <button class="btn btn-ghost btn-xs" onclick="${editCb}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Editar</button>
+    <button class="btn btn-danger btn-xs" onclick="${delCb}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg> Elim.</button>
+  </div>`;
 }
 
-function handleSearch(q){SEARCH_Q=q.toLowerCase();renderCurrent();}
-function renderCurrent(){
-  if(CURRENT_PAGE==='clientes')renderClientes();
-  else if(CURRENT_PAGE==='processos')renderProcessos();
-  else if(CURRENT_PAGE==='pagamentos')renderPagamentos();
-  else if(CURRENT_PAGE==='documentos')renderDocumentos();
-}
-
-// BADGE HELPERS
-function estadoBadge(e){
-  const m={Pendente:'amber',EmAnalise:'blue',Agendado:'purple',Aprovado:'green',Concluido:'green',Rejeitado:'red'};
-  const labels={Pendente:'Pendente',EmAnalise:'Em Análise',Agendado:'Agendado',Aprovado:'Aprovado',Concluido:'Concluído',Rejeitado:'Rejeitado'};
-  const c=m[e]||'gray';
-  return `<span class="badge badge-${c}"><span class="badge-dot"></span>${labels[e]||e}</span>`;
-}
-function pgBadge(e){
-  const m={Pago:'green',Parcial:'amber',Pendente:'red'};
-  return `<span class="badge badge-${m[e]||'gray'}">${e}</span>`;
-}
-function docBadge(s){
-  const m={Entregue:'green',Invalido:'red',Pendente:'amber'};
-  const l={Entregue:'Entregue',Invalido:'Inválido',Pendente:'Pendente'};
-  return `<span class="badge badge-${m[s]||'gray'}">${l[s]||s}</span>`;
-}
-
-// DASHBOARD
-async function loadDashboard(){
+// ── DASHBOARD ──────────────────────────────────────
+async function loadDash(){
   try{
     const d=await api('/dashboard');
-    const el=document.getElementById('dash-content');
-    document.getElementById('nb-clientes').textContent=d.clientesActivos;
-    document.getElementById('nb-processos').textContent=d.processosAbertos;
-    const taxa=typeof d.taxaAprovacao==='number'?d.taxaAprovacao.toFixed(1):'—';
-    el.innerHTML=`
-    <div class="stat-grid">
-      <div class="stat-card stat-blue">
-        <div class="stat-label">Clientes Activos</div>
-        <div class="stat-value">${d.clientesActivos}</div>
-        <div class="stat-sub">Total: ${d.totalClientes}</div>
-      </div>
-      <div class="stat-card stat-amber">
-        <div class="stat-label">Processos Abertos</div>
-        <div class="stat-value">${d.processosAbertos}</div>
-        <div class="stat-sub">Pendentes: ${d.processosPendentes}</div>
-      </div>
-      <div class="stat-card stat-green">
-        <div class="stat-label">Receita Total</div>
-        <div class="stat-value" style="font-size:20px">${fmt(d.receitaTotal)}</div>
-        <div class="stat-sub">Mês actual: ${fmt(d.receitaMesActual)}</div>
-      </div>
-      <div class="stat-card stat-red">
-        <div class="stat-label">Receita Pendente</div>
-        <div class="stat-value" style="font-size:20px">${fmt(d.receitaPendente)}</div>
-        <div class="stat-sub">Taxa de aprovação: ${taxa}%</div>
-      </div>
+    $('nb-c').textContent=d.clientesActivos;
+    $('nb-p').textContent=d.processosAbertos;
+    const taxa=(d.taxaAprovacao||0).toFixed(1);
+    $('dash-body').innerHTML=`
+    <div class="stats-row">
+      <div class="stat s-blue"><div class="stat-lbl">Clientes Activos</div><div class="stat-val">${d.clientesActivos}</div><div class="stat-sub">Total cadastrados: ${d.totalClientes}</div></div>
+      <div class="stat s-amber"><div class="stat-lbl">Processos Abertos</div><div class="stat-val">${d.processosAbertos}</div><div class="stat-sub">Pendentes: ${d.processosPendentes}</div></div>
+      <div class="stat s-green"><div class="stat-lbl">Receita Total</div><div class="stat-val" style="font-size:18px">${fmtAOA(d.receitaTotal)}</div><div class="stat-sub">Mês actual: ${fmtAOA(d.receitaMesActual)}</div></div>
+      <div class="stat s-red"><div class="stat-lbl">A Receber</div><div class="stat-val" style="font-size:18px">${fmtAOA(d.receitaPendente)}</div><div class="stat-sub">Taxa aprovação: ${taxa}%</div></div>
+      <div class="stat s-purple"><div class="stat-lbl">Concluídos</div><div class="stat-val">${d.processosConcluidos||0}</div><div class="stat-sub">Rejeitados: ${d.processosRejeitados||0}</div></div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start">
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start">
       <div>
-        <div style="font-family:var(--font2);font-size:14px;font-weight:600;margin-bottom:12px">Últimos Processos</div>
-        <div class="table-wrap">
+        <div style="font-family:var(--font2);font-size:14px;font-weight:600;margin-bottom:10px">Últimos Processos</div>
+        <div class="tbl-wrap">
           <table>
-            <thead><tr><th>Cliente</th><th>Tipo</th><th>País</th><th>Estado</th><th>Pagamento</th></tr></thead>
-            <tbody>
-              ${(d.ultimosProcessos||[]).map(p=>`
-              <tr class="tr-link" onclick="showProcessoDetail(${p.id})">
-                <td><span style="font-weight:500">${p.clienteNome}</span></td>
-                <td><span style="font-size:12px;color:var(--text2)">${p.tipo}</span></td>
-                <td>${p.paisDestino||'—'}</td>
-                <td>${estadoBadge(p.estado)}</td>
-                <td>${pgBadge(p.estadoPagamento)}</td>
-              </tr>`).join('')}
+            <thead><tr><th>Cliente</th><th>Tipo</th><th>País</th><th>Estado</th><th>Pagamento</th><th>Valor</th></tr></thead>
+            <tbody>${(d.ultimosProcessos||[]).slice(0,8).map(p=>`
+            <tr class="tbl-clickable" onclick="openDetail(${p.id})">
+              <td class="td-main">${esc(p.clienteNome)}</td>
+              <td class="td-sub">${p.tipo}</td>
+              <td>${esc(p.paisDestino||'—')}</td>
+              <td>${estadoBdg(p.estado)}</td>
+              <td>${pgBdg(p.estadoPagamento)}</td>
+              <td class="td-mono">${fmtAOA(p.valorTotal)}</td>
+            </tr>`).join('')}
             </tbody>
           </table>
         </div>
       </div>
       <div>
-        <div style="font-family:var(--font2);font-size:14px;font-weight:600;margin-bottom:12px">Clientes com Dívida</div>
-        ${(d.clientesComDivida||[]).length===0?`<div class="card" style="text-align:center;color:var(--text3);font-size:13px">Sem dívidas em aberto</div>`:''}
-        ${(d.clientesComDivida||[]).map(c=>`
-        <div class="card card-sm" style="margin-bottom:8px">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-            <span style="font-weight:500;font-size:13.5px">${c.clienteNome}</span>
-            <span style="font-size:12px;color:var(--red);font-weight:600">${fmt(c.totalDivida)}</span>
+        <div style="font-family:var(--font2);font-size:14px;font-weight:600;margin-bottom:10px">Clientes com Dívida</div>
+        ${(d.clientesComDivida||[]).length===0?`<div class="card" style="text-align:center;color:var(--text3);font-size:12.5px;padding:20px"><div style="margin-bottom:6px;font-size:20px">✓</div>Sem dívidas em aberto</div>`:
+        (d.clientesComDivida||[]).map(c=>`
+        <div class="card card-p" style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-weight:500;font-size:13px">${esc(c.clienteNome)}</span>
+            <span style="font-size:13px;color:var(--red);font-weight:600">${fmtAOA(c.totalDivida)}</span>
           </div>
-          <span style="font-size:11.5px;color:var(--text3)">${c.numeroProcessos} processo(s)</span>
+          <div style="font-size:11.5px;color:var(--text3);margin-top:3px">${c.numeroProcessos} processo(s)</div>
         </div>`).join('')}
       </div>
     </div>`;
-  }catch(e){document.getElementById('dash-content').innerHTML=`<div class="empty-state"><div class="empty-title">Erro ao carregar dashboard</div><div>${e.message}</div></div>`;}
+  }catch(e){$('dash-body').innerHTML=`<div class="empty"><div class="empty-t">Erro ao carregar dashboard</div><div style="font-size:12px">${esc(e.message)}</div></div>`;}
 }
 
-// CLIENTES
+// ── CLIENTES ───────────────────────────────────────
 async function loadClientes(){
-  try{
-    ALL_CLIENTES=await api('/clientes');
-    renderClientes();
-  }catch{}
+  try{S.clientes=await api('/clientes');renderClientes();}
+  catch(e){$('c-body').innerHTML=`<div class="empty"><div class="empty-t">Erro</div><div>${esc(e.message)}</div></div>`;}
 }
-
-function filterClientes(f,el){
-  FILTER_CLIENTES=f;
-  document.querySelectorAll('#page-clientes .filter-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  renderClientes();
-}
-
+function cFlt(f,el){S.cFlt=f;document.querySelectorAll('#page-clientes .flt').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderClientes();}
 function renderClientes(){
-  let list=ALL_CLIENTES||[];
-  if(FILTER_CLIENTES==='activo')list=list.filter(c=>c.activo);
-  else if(FILTER_CLIENTES==='inactivo')list=list.filter(c=>!c.activo);
-  if(SEARCH_Q&&CURRENT_PAGE==='clientes')list=list.filter(c=>(c.nome+c.email+c.numeroBI+c.telefone).toLowerCase().includes(SEARCH_Q));
-  document.getElementById('clientes-count').textContent=`${list.length} cliente(s)`;
-  if(!list.length){document.getElementById('clientes-table').innerHTML=`<div class="empty-state"><div class="empty-title">Nenhum cliente encontrado</div></div>`;return;}
-  document.getElementById('clientes-table').innerHTML=`
-  <table>
-    <thead><tr><th>Nome</th><th>BI</th><th>Telefone</th><th>Email</th><th>Processos</th><th>Estado</th><th>Cadastro</th></tr></thead>
-    <tbody>${list.map(c=>`
-    <tr class="tr-link" onclick="showClienteDetail(${c.id})">
-      <td><span style="font-weight:500">${c.nome}</span></td>
-      <td style="font-family:monospace;font-size:12px">${c.numeroBI||'—'}</td>
-      <td>${c.telefone||'—'}</td>
-      <td style="color:var(--text2)">${c.email||'—'}</td>
-      <td><span class="badge badge-blue">${c.totalProcessos||0}</span></td>
-      <td>${c.activo?'<span class="badge badge-green">Activo</span>':'<span class="badge badge-gray">Inactivo</span>'}</td>
-      <td style="font-size:12px;color:var(--text3)">${fmtDate(c.dataCadastro)}</td>
+  let list=S.clientes;
+  if(S.cFlt==='activo')list=list.filter(c=>c.activo);
+  else if(S.cFlt==='inactivo')list=list.filter(c=>!c.activo);
+  if(S.q)list=list.filter(c=>(c.nome+c.email+c.numeroBI+c.telefone+c.nacionalidade).toLowerCase().includes(S.q));
+  $('c-count').textContent=`${list.length} cliente(s)`;
+  if(!list.length){$('c-body').innerHTML=`<div class="empty"><div class="empty-t">Nenhum cliente encontrado</div></div>`;return;}
+  $('c-body').innerHTML=`<div class="tbl-wrap"><table>
+    <thead><tr><th>Nome</th><th>BI</th><th>Contacto</th><th>Nacionalidade</th><th>Processos</th><th>Estado</th><th>Cadastro</th><th></th></tr></thead>
+    <tbody>${list.map(c=>`<tr>
+      <td class="td-main tbl-clickable" onclick="openClienteDetail(${c.id})">${esc(c.nome)}</td>
+      <td class="td-mono">${esc(c.numeroBI||'—')}</td>
+      <td><div style="font-size:13px">${esc(c.telefone||'—')}</div><div style="font-size:11.5px;color:var(--text3)">${esc(c.email||'')}</div></td>
+      <td>${esc(c.nacionalidade||'—')}</td>
+      <td><span class="bdg bdg-blue">${c.totalProcessos||0}</span></td>
+      <td>${c.activo?'<span class="bdg bdg-green">Activo</span>':'<span class="bdg bdg-gray">Inactivo</span>'}</td>
+      <td class="td-sub">${fmtDate(c.dataCadastro)}</td>
+      <td>${adminActions(`editCliente(${c.id})`,`delCliente(${c.id},'${esc(c.nome)}')`,'<button class="btn btn-ghost btn-xs" onclick="openClienteDetail('+c.id+')">Ver</button> ')}</td>
     </tr>`).join('')}</tbody>
-  </table>`;
+  </table></div>`;
 }
 
-// PROCESSOS
-async function loadProcessos(){
+// CRUD Clientes
+function openClienteModal(id=null){
+  S.editClienteId=id;
+  $('mc-t').textContent=id?'Editar Cliente':'Novo Cliente';
+  $('mc-save').textContent=id?'Guardar Alterações':'Criar Cliente';
+  $('c-activo-wrap').style.display=id?'flex':'none';
+  $('mc-lock').innerHTML=id&&!isAdmin?`<span class="admin-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Só Admin pode editar</span>`:''
+  const fields=['c-nome','c-bi','c-email','c-tel','c-nac','c-obs'];
+  fields.forEach(f=>$(f).value='');
+  if(id){
+    const c=S.clientes.find(x=>x.id===id);
+    if(c){$('c-nome').value=c.nome||'';$('c-bi').value=c.numeroBI||'';$('c-email').value=c.email||'';$('c-tel').value=c.telefone||'';$('c-nac').value=c.nacionalidade||'';$('c-obs').value=c.observacoes||'';$('c-activo').checked=c.activo;}
+  }
+  openM('m-cliente');
+}
+async function saveCliente(){
+  if(!isAdmin&&S.editClienteId){toast('Só Admin pode editar clientes','err');return;}
+  const nome=$('c-nome').value.trim();
+  if(!nome){toast('Nome é obrigatório','err');return;}
+  const btn=$('mc-save');btn.disabled=true;btn.textContent='A guardar...';
+  const body={nome,numeroBI:$('c-bi').value,email:$('c-email').value,telefone:$('c-tel').value,nacionalidade:$('c-nac').value,observacoes:$('c-obs').value};
+  if(S.editClienteId)body.activo=$('c-activo').checked;
   try{
-    ALL_PROCESSOS=await api('/processos');
-    renderProcessos();
-  }catch{}
+    if(S.editClienteId)await api(`/clientes/${S.editClienteId}`,'PUT',body);
+    else await api('/clientes','POST',body);
+    toast(S.editClienteId?'Cliente actualizado':'Cliente criado','ok');
+    closeM('m-cliente');await loadClientes();await loadDash();
+  }catch(e){toast(e.message,'err');}
+  finally{btn.disabled=false;btn.textContent=S.editClienteId?'Guardar Alterações':'Criar Cliente';}
+}
+function editCliente(id){if(!isAdmin){toast('Requer permissão Admin','err');return;}openClienteModal(id);}
+function delCliente(id,nome){
+  if(!isAdmin){toast('Requer permissão Admin','err');return;}
+  openConfirm('Desactivar Cliente',`Deseja desactivar o cliente "${nome}"?`,async()=>{
+    try{await api(`/clientes/${id}`,'DELETE');toast('Cliente desactivado','ok');await loadClientes();await loadDash();}
+    catch(e){toast(e.message,'err');}
+  });
 }
 
-function filterProcessos(estado,el){
-  FILTER_ESTADO=estado;
-  document.querySelectorAll('#processos-filters .filter-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  renderProcessos();
+// DETAIL Cliente
+async function openClienteDetail(id){
+  openM('m-detail');$('md-t').textContent='Cliente';$('md-s').textContent='';$('md-body').innerHTML='<div class="loading"><div class="spinner"></div></div>';$('md-foot').innerHTML='';
+  try{
+    const c=await api(`/clientes/${id}`);
+    const procs=S.processos.filter(p=>p.clienteId===id);
+    $('md-body').innerHTML=`
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+      <div class="avatar" style="width:52px;height:52px;font-size:17px;border-radius:14px">${initials(c.nome)}</div>
+      <div><div style="font-family:var(--font2);font-size:18px;font-weight:600">${esc(c.nome)}</div>
+      <div style="font-size:12.5px;color:var(--text3);margin-top:3px">${esc(c.nacionalidade||'—')} · ${c.activo?'<span style="color:var(--green)">Activo</span>':'<span style="color:var(--red)">Inactivo</span>'}</div></div>
+    </div>
+    <div class="section-box">
+      <div class="section-box-title">Dados</div>
+      <div class="info-grid">
+        ${[['BI / Passaporte',c.numeroBI],['Email',c.email],['Telefone',c.telefone],['Cadastro',fmtDate(c.dataCadastro)]].map(([l,v])=>`
+        <div class="info-block"><div class="info-lbl">${l}</div><div class="info-val">${esc(v||'—')}</div></div>`).join('')}
+      </div>
+    </div>
+    ${c.observacoes?`<div class="section-box"><div class="section-box-title">Observações</div><div style="font-size:13px;color:var(--text2)">${esc(c.observacoes)}</div></div>`:''}
+    ${procs.length?`<div class="section-box"><div class="section-box-title">Processos (${procs.length})</div>
+    <div class="tbl-wrap"><table><thead><tr><th>Tipo</th><th>País</th><th>Estado</th><th>Pagamento</th><th>Valor</th></tr></thead><tbody>
+    ${procs.map(p=>`<tr class="tbl-clickable" onclick="closeM('m-detail');setTimeout(()=>openDetail(${p.id}),150)">
+      <td>${p.tipo}</td><td>${esc(p.paisDestino||'—')}</td><td>${estadoBdg(p.estado)}</td><td>${pgBdg(p.estadoPagamento)}</td><td class="td-mono">${fmtAOA(p.valorTotal)}</td>
+    </tr>`).join('')}</tbody></table></div></div>`:''}`;
+    const foot=[];
+    if(isAdmin)foot.push(`<button class="btn btn-ghost" onclick="closeM('m-detail');editCliente(${id})">Editar</button>`);
+    if(isAdmin)foot.push(`<button class="btn btn-danger" onclick="closeM('m-detail');delCliente(${id},'${esc(c.nome)}')">Desactivar</button>`);
+    $('md-foot').innerHTML=`<div class="mf-left"></div>${foot.join('')}<button class="btn btn-ghost" onclick="closeM('m-detail')">Fechar</button>`;
+  }catch(e){$('md-body').innerHTML=`<div class="empty"><div class="empty-t">${esc(e.message)}</div></div>`;}
 }
 
+// ── PROCESSOS ─────────────────────────────────────
+async function loadProcessos(){
+  try{S.processos=await api('/processos');renderProcessos();}
+  catch(e){$('p-body').innerHTML=`<div class="empty"><div class="empty-t">Erro</div></div>`;}
+}
+function pFlt(f,el){S.pFlt=f;document.querySelectorAll('#p-flts .flt').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderProcessos();}
 function renderProcessos(){
-  let list=ALL_PROCESSOS||[];
-  if(FILTER_ESTADO)list=list.filter(p=>p.estado===FILTER_ESTADO);
-  if(SEARCH_Q&&CURRENT_PAGE==='processos')list=list.filter(p=>(p.clienteNome+p.tipo+p.paisDestino).toLowerCase().includes(SEARCH_Q));
-  document.getElementById('processos-count').textContent=`${list.length} processo(s)`;
-  if(!list.length){document.getElementById('processos-table').innerHTML=`<div class="empty-state"><div class="empty-title">Nenhum processo encontrado</div></div>`;return;}
-  document.getElementById('processos-table').innerHTML=`
-  <table>
-    <thead><tr><th>ID</th><th>Cliente</th><th>Tipo</th><th>País</th><th>Valor</th><th>Pago</th><th>Estado</th><th>Pagamento</th><th>Data</th></tr></thead>
-    <tbody>${list.map(p=>`
-    <tr class="tr-link" onclick="showProcessoDetail(${p.id})">
-      <td style="font-size:12px;color:var(--text3)">#${p.id}</td>
-      <td><span style="font-weight:500">${p.clienteNome}</span></td>
-      <td style="font-size:12px">${p.tipo}</td>
-      <td>${p.paisDestino||'—'}</td>
-      <td style="font-family:monospace;font-size:12px">${fmt(p.valorTotal)}</td>
+  let list=S.processos;
+  if(S.pFlt)list=list.filter(p=>p.estado===S.pFlt);
+  if(S.q)list=list.filter(p=>(p.clienteNome+p.tipo+p.paisDestino).toLowerCase().includes(S.q));
+  $('p-count').textContent=`${list.length} processo(s)`;
+  if(!list.length){$('p-body').innerHTML=`<div class="empty"><div class="empty-t">Nenhum processo encontrado</div></div>`;return;}
+  $('p-body').innerHTML=`<div class="tbl-wrap"><table>
+    <thead><tr><th>#</th><th>Cliente</th><th>Tipo</th><th>País</th><th>Valor</th><th>Pagamento</th><th>Estado</th><th>Data</th><th></th></tr></thead>
+    <tbody>${list.map(p=>`<tr>
+      <td class="td-sub">#${p.id}</td>
+      <td class="td-main tbl-clickable" onclick="openDetail(${p.id})">${esc(p.clienteNome)}</td>
+      <td class="td-sub">${p.tipo}</td>
+      <td>${esc(p.paisDestino||'—')}</td>
+      <td class="td-mono">${fmtAOA(p.valorTotal)}</td>
       <td>
-        <div style="min-width:80px">
-          <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span>${p.percentagemPaga?p.percentagemPaga.toFixed(0):0}%</span></div>
-          <div class="progress-bar"><div class="progress-fill ${p.percentagemPaga>=100?'green':p.percentagemPaga>0?'':'amber'}" style="width:${Math.min(p.percentagemPaga||0,100)}%"></div></div>
-        </div>
+        <div>${pgBdg(p.estadoPagamento)}</div>
+        <div class="pct-bar-wrap" style="margin-top:5px"><div class="prog"><div class="prog-fill ${p.percentagemPaga>=100?'g':p.percentagemPaga>0?'a':'r'}" style="width:${Math.min(p.percentagemPaga||0,100)}%"></div></div><span>${(p.percentagemPaga||0).toFixed(0)}%</span></div>
       </td>
-      <td>${estadoBadge(p.estado)}</td>
-      <td>${pgBadge(p.estadoPagamento)}</td>
-      <td style="font-size:12px;color:var(--text3)">${fmtDate(p.dataCriacao)}</td>
+      <td>${estadoBdg(p.estado)}</td>
+      <td class="td-sub">${fmtDate(p.dataCriacao)}</td>
+      <td>${adminActions(`editProcesso(${p.id})`,`delProcesso(${p.id},'${esc(p.clienteNome)}')`,'<button class="btn btn-ghost btn-xs" onclick="openDetail('+p.id+')">Ver</button> ')}</td>
     </tr>`).join('')}</tbody>
-  </table>`;
+  </table></div>`;
 }
 
-// PAGAMENTOS
+// CRUD Processos
+const DOC_TYPES=['Passaporte','FotoTipoPasse','ComprovantivoResidencia','DeclaracaoEmprego','CertidaoNascimento','CertidaoCasamento','ComprovantivoRendimentos','ExtratoBancario','CartaConvite','SeguroViagem','FormularioVisto'];
+const CHECKLIST={VistoTrabalho:['Passaporte','FotoTipoPasse','ComprovantivoResidencia','DeclaracaoEmprego','ComprovantivoRendimentos','ExtratoBancario'],VistoEstudo:['Passaporte','FotoTipoPasse','ComprovantivoResidencia','CartaConvite','ExtratoBancario'],Passaporte:['FotoTipoPasse','ComprovantivoResidencia','CertidaoNascimento'],Legalizacao:['Passaporte','FotoTipoPasse','CertidaoNascimento','CertidaoCasamento'],ReagrupamentoFamiliar:['Passaporte','FotoTipoPasse','CertidaoCasamento','CertidaoNascimento','ComprovantivoResidencia']};
+
+async function openProcessoModal(id=null){
+  S.editProcessoId=id;S.pendingFiles=[];
+  $('mp-t').textContent=id?'Editar Processo':'Novo Processo';
+  $('mp-sub').textContent=id?`Processo #${id}`:'';
+  $('mp-save').textContent=id?'Guardar Alterações':'Criar Processo';
+  $('mp-lock').innerHTML=id&&!isAdmin?`<span class="admin-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Só Admin pode editar</span>`:'';
+  $('p-estado-wrap').style.display=id?'block':'none';
+  // Populate clients
+  const sel=$('p-cliente');
+  sel.innerHTML='<option value="">Seleccionar cliente...</option>';
+  const clientes=S.clientes.length?S.clientes:await api('/clientes').catch(()=>[]);
+  clientes.filter(c=>c.activo||id).forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.nome;sel.appendChild(o);});
+  // Reset
+  ['p-tipo','p-pais','p-valor','p-data','p-obs'].forEach(f=>$(f).value='');
+  $('p-estado').value='Pendente';
+  renderFileList();updateDocChecklist();
+  if(id){
+    const p=S.processos.find(x=>x.id===id);
+    if(p){
+      $('p-cliente').value=p.clienteId;$('p-tipo').value=p.tipo;$('p-pais').value=p.paisDestino||'';
+      $('p-valor').value=p.valorTotal||'';$('p-estado').value=p.estado;$('p-obs').value=p.observacoes||'';
+      if(p.dataAgendamento)$('p-data').value=p.dataAgendamento.slice(0,16);
+      updateDocChecklist();
+    }
+  }
+  switchTab('t-info',document.querySelector('#proc-tabs .tab'));
+  openM('m-processo');
+}
+
+function switchTab(id,el){
+  document.querySelectorAll('#proc-tabs .tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');$(id).classList.add('active');
+}
+
+function updateDocChecklist(){
+  const tipo=$('p-tipo').value;
+  const box=$('checklist-box');
+  if(!tipo){box.innerHTML='<div style="font-size:12.5px;color:var(--text3)">Seleccione o tipo de processo para ver a checklist de documentos necessários.</div>';return;}
+  const req=CHECKLIST[tipo]||[];
+  if(!req.length){box.innerHTML='';return;}
+  box.innerHTML=`<div class="section-box"><div class="section-box-title">Documentos necessários para ${tipo}</div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px">${req.map(d=>{
+    const has=S.pendingFiles.some(f=>f.tipo===d);
+    return `<span class="chip" style="${has?'border-color:var(--green);color:var(--green)':''}">
+      ${has?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'}
+      ${d}</span>`;
+  }).join('')}</div></div>`;
+}
+
+function onFilePick(files){
+  Array.from(files).forEach(f=>{
+    if(f.size>10*1024*1024){toast(`${f.name} excede 10MB`,'err');return;}
+    S.pendingFiles.push({file:f,tipo:autoDetectType(f.name),name:f.name,size:f.size});
+  });
+  $('dz-input').value='';
+  renderFileList();updateDocChecklist();
+}
+
+function autoDetectType(name){
+  const n=name.toLowerCase();
+  if(n.includes('passaporte')||n.includes('passport'))return'Passaporte';
+  if(n.includes('foto'))return'FotoTipoPasse';
+  if(n.includes('residencia'))return'ComprovantivoResidencia';
+  if(n.includes('emprego'))return'DeclaracaoEmprego';
+  if(n.includes('nascimento'))return'CertidaoNascimento';
+  if(n.includes('casamento'))return'CertidaoCasamento';
+  return 'Passaporte';
+}
+
+function renderFileList(){
+  const el=$('file-list');
+  if(!S.pendingFiles.length){el.innerHTML='';return;}
+  el.innerHTML=S.pendingFiles.map((f,i)=>`
+  <div class="file-item">
+    <div class="file-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg></div>
+    <span class="file-name" title="${esc(f.name)}">${esc(f.name)}</span>
+    <span class="file-size">${fmtBytes(f.size)}</span>
+    <select class="file-type-sel" onchange="S.pendingFiles[${i}].tipo=this.value;updateDocChecklist()">
+      ${DOC_TYPES.map(t=>`<option value="${t}" ${t===f.tipo?'selected':''}>${t}</option>`).join('')}
+    </select>
+    <button class="file-remove" onclick="S.pendingFiles.splice(${i},1);renderFileList();updateDocChecklist()">✕</button>
+  </div>`).join('');
+}
+
+async function saveProcesso(){
+  if(S.editProcessoId&&!isAdmin){toast('Requer permissão Admin','err');return;}
+  const clienteId=parseInt($('p-cliente').value);
+  const tipo=$('p-tipo').value;
+  if(!clienteId||!tipo){toast('Cliente e tipo são obrigatórios','err');return;}
+  const btn=$('mp-save');btn.disabled=true;btn.textContent='A guardar...';
+  const body={clienteId,tipo,paisDestino:$('p-pais').value,valorTotal:parseFloat($('p-valor').value)||0,observacoes:$('p-obs').value,dataAgendamento:$('p-data').value||null};
+  if(S.editProcessoId)body.estado=$('p-estado').value;
+  try{
+    let procId=S.editProcessoId;
+    if(procId)await api(`/processos/${procId}`,'PUT',body);
+    else{const r=await api('/processos','POST',body);procId=r.id||r;}
+    // Upload docs
+    if(S.pendingFiles.length&&procId){
+      let uploaded=0,failed=0;
+      for(const pf of S.pendingFiles){
+        try{
+          const fd=new FormData();fd.append('file',pf.file);fd.append('tipo',pf.tipo);
+          await api(`/documentos/upload/${procId}`,'POST',fd,true);uploaded++;
+        }catch{failed++;}
+      }
+      if(failed)toast(`${uploaded} doc(s) enviados, ${failed} falharam`,'info');
+      else if(uploaded)toast(`${uploaded} documento(s) associados`,'ok');
+    }
+    toast(S.editProcessoId?'Processo actualizado':'Processo criado','ok');
+    closeM('m-processo');
+    await Promise.all([loadProcessos(),loadClientes(),loadDash()]);
+  }catch(e){toast(e.message,'err');}
+  finally{btn.disabled=false;btn.textContent=S.editProcessoId?'Guardar Alterações':'Criar Processo';}
+}
+
+function editProcesso(id){if(!isAdmin){toast('Requer permissão Admin','err');return;}openProcessoModal(id);}
+function delProcesso(id,nome){
+  if(!isAdmin){toast('Requer permissão Admin','err');return;}
+  openConfirm('Eliminar Processo',`Eliminar o processo de "${nome}"? Esta acção é irreversível.`,async()=>{
+    try{await api(`/processos/${id}`,'DELETE');toast('Processo eliminado','ok');await Promise.all([loadProcessos(),loadDash()]);}
+    catch(e){toast(e.message,'err');}
+  });
+}
+
+// DETAIL Processo
+async function openDetail(id){
+  openM('m-detail');$('md-t').textContent=`Processo #${id}`;$('md-s').textContent='';
+  $('md-body').innerHTML='<div class="loading"><div class="spinner"></div></div>';$('md-foot').innerHTML='';
+  try{
+    const [p,resumo,docs]=await Promise.all([
+      api(`/processos/${id}`),
+      api(`/pagamentos/resumo/${id}`),
+      api(`/documentos/processo/${id}`).catch(()=>[])
+    ]);
+    $('md-s').textContent=p.clienteNome+' · '+p.tipo;
+    $('md-body').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:18px">
+      <div class="stat s-blue" style="padding:12px"><div class="stat-lbl">Valor Total</div><div class="stat-val" style="font-size:17px">${fmtAOA(p.valorTotal)}</div></div>
+      <div class="stat s-green" style="padding:12px"><div class="stat-lbl">Total Pago</div><div class="stat-val" style="font-size:17px">${fmtAOA(resumo.totalPago)}</div></div>
+      <div class="stat s-red" style="padding:12px"><div class="stat-lbl">Saldo</div><div class="stat-val" style="font-size:17px">${fmtAOA(resumo.saldo)}</div></div>
+      <div class="stat" style="padding:12px"><div class="stat-lbl">Pago</div><div class="stat-val" style="font-size:17px">${(resumo.percentagemPaga||0).toFixed(0)}%</div>
+        <div class="prog" style="margin-top:6px"><div class="prog-fill g" style="width:${Math.min(resumo.percentagemPaga||0,100)}%"></div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+      <div class="section-box">
+        <div class="section-box-title">Informações</div>
+        ${[['Cliente',esc(p.clienteNome)],['Tipo',p.tipo],['País Destino',esc(p.paisDestino||'—')],['Estado',estadoBdg(p.estado)],['Pagamento',pgBdg(resumo.estadoPagamento)],['Criado em',fmtDate(p.dataCriacao)],['Agendamento',fmtDT(p.dataAgendamento)],['Conclusão',fmtDate(p.dataConclusao)]].map(([l,v])=>`
+        <div class="dl-row"><span class="dl-lbl">${l}</span><span class="dl-val">${v}</span></div>`).join('')}
+        ${p.observacoes?`<div class="dl-row"><span class="dl-lbl">Obs.</span><span class="dl-val" style="font-size:12px">${esc(p.observacoes)}</span></div>`:''}
+      </div>
+      <div>
+        <div class="section-box">
+          <div class="section-box-title" style="display:flex;justify-content:space-between">
+            <span>Documentos (${docs.length})</span>
+            <label style="cursor:pointer;color:var(--accent);font-size:11px;font-weight:500">
+              + Adicionar<input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.docx" style="display:none" onchange="uploadDocsToProcesso(${id},this.files)"/>
+            </label>
+          </div>
+          ${docs.length?docs.map(d=>`
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+            <div style="flex:1"><div style="font-size:12.5px;font-weight:500">${esc(d.tipo)}</div><div style="font-size:11.5px;color:var(--text3)">${esc(d.nomeFicheiro)} · ${fmtBytes(d.tamanhoBytes)}</div></div>
+            ${docBdg(d.status)}
+            <button class="btn btn-ghost btn-xs" onclick="openDocStatus(${d.id},'${esc(d.tipo)}','${d.status}')">✏</button>
+            <button class="btn btn-ghost btn-xs" onclick="dlDoc(${d.id},'${esc(d.nomeFicheiro)}')">↓</button>
+            ${isAdmin?`<button class="btn btn-danger btn-xs" onclick="delDoc(${d.id},${id})">✕</button>`:''}
+          </div>`).join(''):'<div style="font-size:12.5px;color:var(--text3);padding:8px 0">Nenhum documento associado.</div>'}
+        </div>
+      </div>
+    </div>
+    <div class="section-box">
+      <div class="section-box-title" style="display:flex;justify-content:space-between">
+        <span>Histórico de Pagamentos (${(resumo.historicoPagamentos||[]).length})</span>
+        <button class="btn btn-ghost btn-xs" onclick="closeM('m-detail');setTimeout(()=>{goPage('pagamentos',document.getElementById('nav-pagamentos'));openPgModal(${id})},200)">+ Registar</button>
+      </div>
+      ${(resumo.historicoPagamentos||[]).length===0?`<div style="font-size:12.5px;color:var(--text3);padding:8px 0">Sem pagamentos registados.</div>`:`
+      <div class="tbl-wrap"><table><thead><tr><th>Data</th><th>Valor</th><th>Método</th><th>Referência</th><th>Registado por</th>${isAdmin?'<th></th>':''}</tr></thead><tbody>
+      ${(resumo.historicoPagamentos||[]).map(pg=>`<tr>
+        <td class="td-sub">${fmtDT(pg.dataPagamento)}</td>
+        <td style="color:var(--green);font-weight:600">${fmtAOA(pg.valor)}</td>
+        <td><span class="bdg bdg-gray">${pg.metodo}</span></td>
+        <td class="td-mono">${esc(pg.referencia||'—')}</td>
+        <td class="td-sub">${esc(pg.registadoPor||'—')}</td>
+        ${isAdmin?`<td><button class="btn btn-danger btn-xs" onclick="delPagamento(${pg.id},${id})">Elim.</button></td>`:''}
+      </tr>`).join('')}
+      </tbody></table></div>`}
+    </div>`;
+
+    const foot=[];
+    if(isAdmin){
+      foot.push(`<button class="btn btn-ghost" onclick="closeM('m-detail');editProcesso(${id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Editar Processo</button>`);
+      foot.push(`<button class="btn btn-danger" onclick="closeM('m-detail');delProcesso(${id},'${esc(p.clienteNome)}')">Eliminar</button>`);
+    }
+    $('md-foot').innerHTML=`<div class="mf-left"></div>${foot.join('')}<button class="btn btn-ghost" onclick="closeM('m-detail')">Fechar</button>`;
+  }catch(e){$('md-body').innerHTML=`<div class="empty"><div class="empty-t">${esc(e.message)}</div></div>`;}
+}
+
+// Upload docs to existing processo
+async function uploadDocsToProcesso(processoId,files){
+  let ok=0,fail=0;
+  for(const f of Array.from(files)){
+    try{
+      const fd=new FormData();fd.append('file',f);fd.append('tipo',autoDetectType(f.name));
+      await api(`/documentos/upload/${processoId}`,'POST',fd,true);ok++;
+    }catch{fail++;}
+  }
+  if(fail)toast(`${ok} enviado(s), ${fail} falhou(ram)`,'info');
+  else toast(`${ok} documento(s) enviados`,'ok');
+  await loadProcessos();
+  openDetail(processoId);
+}
+
+// ── PAGAMENTOS ────────────────────────────────────
 async function loadPagamentos(){
   try{
-    const d=await api('/pagamentos/dashboard');
-    ALL_PAGAMENTOS=d.pagamentos||d||[];
-    const stats=d.stats||null;
-    if(stats){
-      document.getElementById('pagamentos-dash-stats').innerHTML=`
-      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat-card stat-green"><div class="stat-label">Total Recebido</div><div class="stat-value" style="font-size:19px">${fmt(stats.totalRecebido)}</div></div>
-        <div class="stat-card stat-amber"><div class="stat-label">A Receber</div><div class="stat-value" style="font-size:19px">${fmt(stats.totalPendente)}</div></div>
-        <div class="stat-card stat-blue"><div class="stat-label">Este Mês</div><div class="stat-value" style="font-size:19px">${fmt(stats.meActual)}</div></div>
+    const d=await api('/pagamentos/dashboard').catch(()=>null);
+    if(d&&Array.isArray(d)){S.pagamentos=d;}
+    else if(d&&d.pagamentos){S.pagamentos=d.pagamentos;
+      if(d.stats)$('pg-stats').innerHTML=`<div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat s-green"><div class="stat-lbl">Total Recebido</div><div class="stat-val" style="font-size:17px">${fmtAOA(d.stats.totalRecebido)}</div></div>
+        <div class="stat s-amber"><div class="stat-lbl">A Receber</div><div class="stat-val" style="font-size:17px">${fmtAOA(d.stats.totalPendente)}</div></div>
+        <div class="stat s-blue"><div class="stat-lbl">Este Mês</div><div class="stat-val" style="font-size:17px">${fmtAOA(d.stats.meActual)}</div></div>
       </div>`;
     }
     renderPagamentos();
-  }catch{
-    ALL_PAGAMENTOS=[];renderPagamentos();
-  }
+  }catch(e){$('pg-body').innerHTML=`<div class="empty"><div class="empty-t">Erro ao carregar</div></div>`;}
 }
 
 function renderPagamentos(){
-  let list=ALL_PAGAMENTOS||[];
-  if(SEARCH_Q&&CURRENT_PAGE==='pagamentos')list=list.filter(p=>(p.clienteNome+p.metodo+p.referencia).toLowerCase().includes(SEARCH_Q));
-  document.getElementById('pagamentos-count').textContent=`${list.length} pagamento(s)`;
-  if(!list.length){document.getElementById('pagamentos-table').innerHTML=`<div class="empty-state"><div class="empty-title">Nenhum pagamento encontrado</div></div>`;return;}
-  document.getElementById('pagamentos-table').innerHTML=`
-  <table>
-    <thead><tr><th>ID</th><th>Cliente</th><th>Processo</th><th>Valor</th><th>Método</th><th>Referência</th><th>Registado por</th><th>Data</th></tr></thead>
-    <tbody>${list.map(p=>`
-    <tr>
-      <td style="font-size:12px;color:var(--text3)">#${p.id}</td>
-      <td><span style="font-weight:500">${p.clienteNome||'—'}</span></td>
-      <td style="font-size:12px;color:var(--text2)">#${p.processoId}</td>
-      <td style="font-family:monospace;font-size:13px;color:var(--green);font-weight:500">${fmt(p.valor)}</td>
-      <td><span class="badge badge-gray">${p.metodo}</span></td>
-      <td style="font-size:12px;font-family:monospace">${p.referencia||'—'}</td>
-      <td style="font-size:12px;color:var(--text3)">${p.registadoPor||'—'}</td>
-      <td style="font-size:12px;color:var(--text3)">${fmtDate(p.dataPagamento)}</td>
+  let list=S.pagamentos||[];
+  if(S.q)list=list.filter(p=>(p.clienteNome+p.metodo+p.referencia+''+p.processoId).toLowerCase().includes(S.q));
+  $('pg-count').textContent=`${list.length} pagamento(s)`;
+  if(!list.length){$('pg-body').innerHTML=`<div class="empty"><div class="empty-t">Nenhum pagamento encontrado</div></div>`;return;}
+  $('pg-body').innerHTML=`<div class="tbl-wrap"><table>
+    <thead><tr><th>#</th><th>Cliente</th><th>Processo</th><th>Valor</th><th>Método</th><th>Referência</th><th>Registado por</th><th>Data</th>${isAdmin?'<th></th>':''}</tr></thead>
+    <tbody>${list.map(p=>`<tr>
+      <td class="td-sub">#${p.id}</td>
+      <td class="td-main">${esc(p.clienteNome||'—')}</td>
+      <td><span class="bdg bdg-gray tbl-clickable" onclick="openDetail(${p.processoId})" title="Ver processo">#${p.processoId}</span></td>
+      <td style="color:var(--green);font-weight:600">${fmtAOA(p.valor)}</td>
+      <td><span class="bdg bdg-blue">${p.metodo}</span></td>
+      <td class="td-mono">${esc(p.referencia||'—')}</td>
+      <td class="td-sub">${esc(p.registadoPor||'—')}</td>
+      <td class="td-sub">${fmtDT(p.dataPagamento)}</td>
+      ${isAdmin?`<td><button class="btn btn-danger btn-xs" onclick="delPagamento(${p.id},null)">Elim.</button></td>`:''}
     </tr>`).join('')}</tbody>
-  </table>`;
+  </table></div>`;
 }
 
-// DOCUMENTOS
-async function loadDocumentos(){
+async function openPgModal(processoId=null){
+  const sel=$('pg-proc');sel.innerHTML='<option value="">Seleccionar processo...</option>';
+  const procs=S.processos.length?S.processos:await api('/processos').catch(()=>[]);
+  procs.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=`#${p.id} — ${p.clienteNome} (${p.tipo})`;if(processoId&&p.id===processoId)o.selected=true;sel.appendChild(o);});
+  S.pgProcessos=procs;
+  ['pg-val','pg-met','pg-ref','pg-obs'].forEach(f=>$(f).value='');
+  $('pg-preview').textContent='';
+  if(processoId)calcSaldoPreview();
+  openM('m-pagamento');
+}
+
+async function calcSaldoPreview(){
+  const id=parseInt($('pg-proc').value);
+  if(!id){$('pg-preview').textContent='';return;}
   try{
-    const procs=ALL_PROCESSOS.length?ALL_PROCESSOS:await api('/processos');
-    const all=[];
-    await Promise.all(procs.slice(0,30).map(async p=>{
-      try{const docs=await api(`/documentos/processo/${p.id}`);docs.forEach(d=>{d._clienteNome=p.clienteNome;d._tipoProcesso=p.tipo;});all.push(...docs);}catch{}
-    }));
-    ALL_DOCS=all;
-    renderDocumentos();
+    const r=await api(`/pagamentos/resumo/${id}`);
+    const val=parseFloat($('pg-val').value)||0;
+    $('pg-preview').innerHTML=`Saldo actual: <b>${fmtAOA(r.saldo)}</b>${val?` → após pagamento: <b style="color:${r.saldo-val>0?'var(--amber)':'var(--green)'}">${fmtAOA(Math.max(0,r.saldo-val))}</b>`:''}`;
   }catch{}
 }
 
-function filterDocs(f,el){
-  FILTER_DOCS=f;
-  document.querySelectorAll('#page-documentos .filter-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  renderDocumentos();
-}
-
-function renderDocumentos(){
-  let list=ALL_DOCS||[];
-  if(FILTER_DOCS!=='all')list=list.filter(d=>d.status===FILTER_DOCS);
-  if(SEARCH_Q&&CURRENT_PAGE==='documentos')list=list.filter(d=>(d.tipo+d.nomeFicheiro+(d._clienteNome||'')).toLowerCase().includes(SEARCH_Q));
-  if(!list.length){document.getElementById('documentos-table').innerHTML=`<div class="empty-state"><div class="empty-title">Nenhum documento encontrado</div></div>`;return;}
-  document.getElementById('documentos-table').innerHTML=`
-  <table>
-    <thead><tr><th>Tipo</th><th>Ficheiro</th><th>Cliente</th><th>Processo</th><th>Status</th><th>Tamanho</th><th>Upload</th><th>Ações</th></tr></thead>
-    <tbody>${list.map(d=>`
-    <tr>
-      <td style="font-weight:500;font-size:13px">${d.tipo}</td>
-      <td style="font-size:12px;color:var(--text2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.nomeFicheiro}</td>
-      <td>${d._clienteNome||'—'}</td>
-      <td style="font-size:12px;color:var(--text3)">#${d.processoId}</td>
-      <td>${docBadge(d.status)}</td>
-      <td style="font-size:11.5px;color:var(--text3)">${fmtBytes(d.tamanhoBytes)}</td>
-      <td style="font-size:12px;color:var(--text3)">${fmtDate(d.dataUpload)}</td>
-      <td>
-        <button class="btn btn-ghost" style="padding:5px 10px;font-size:12px" onclick="downloadDoc(${d.id},'${d.nomeFicheiro}')">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        </button>
-      </td>
-    </tr>`).join('')}</tbody>
-  </table>`;
-}
-
-async function downloadDoc(id,nome){
-  try{
-    const r=await fetch(API+`/documentos/download/${id}`,{headers:{'Authorization':'Bearer '+TOKEN}});
-    if(!r.ok)throw new Error();
-    const blob=await r.blob();
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');a.href=url;a.download=nome;a.click();
-    URL.revokeObjectURL(url);
-  }catch{toast('Erro ao descarregar ficheiro','error');}
-}
-
-// DETAIL VIEWS
-async function showClienteDetail(id){
-  openModal('modal-detail');
-  document.getElementById('detail-title').textContent='Detalhes do Cliente';
-  document.getElementById('detail-body').innerHTML='<div class="loading-state"><div class="spinner"></div></div>';
-  try{
-    const c=await api(`/clientes/${id}`);
-    document.getElementById('detail-body').innerHTML=`
-    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
-      <div class="avatar" style="width:52px;height:52px;font-size:16px">${c.nome.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase()}</div>
-      <div>
-        <div style="font-family:var(--font2);font-size:17px;font-weight:600">${c.nome}</div>
-        <div style="font-size:12.5px;color:var(--text3);margin-top:2px">${c.nacionalidade||'—'} · ${c.activo?'Activo':'Inactivo'}</div>
-      </div>
-    </div>
-    <div class="card card-sm" style="margin-bottom:14px">
-      ${[['BI',c.numeroBI],['Email',c.email],['Telefone',c.telefone],['Cadastro',fmtDate(c.dataCadastro)],['Processos',c.totalProcessos]].map(([l,v])=>`
-      <div class="info-row"><span class="detail-label">${l}</span><span class="detail-value">${v||'—'}</span></div>`).join('')}
-    </div>
-    ${c.observacoes?`<div class="card card-sm"><div class="detail-label" style="margin-bottom:6px">Observações</div><div style="font-size:13px;color:var(--text2)">${c.observacoes}</div></div>`:''}
-    <div style="margin-top:16px;display:flex;gap:8px">
-      <button class="btn btn-primary" onclick="closeModal('modal-detail');CURRENT_PAGE='processos';navigate('processos')">Ver Processos</button>
-    </div>`;
-  }catch(e){document.getElementById('detail-body').innerHTML=`<div class="empty-state">${e.message}</div>`;}
-}
-
-async function showProcessoDetail(id){
-  openModal('modal-detail');
-  document.getElementById('detail-title').textContent='Detalhes do Processo';
-  document.getElementById('detail-body').innerHTML='<div class="loading-state"><div class="spinner"></div></div>';
-  try{
-    const [p,resumo]=await Promise.all([api(`/processos/${id}`),api(`/pagamentos/resumo/${id}`)]);
-    const docs=p.documentos||await api(`/documentos/processo/${id}`).catch(()=>[]);
-    document.getElementById('detail-body').innerHTML=`
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
-      <div class="stat-card stat-blue"><div class="stat-label">Valor Total</div><div class="stat-value" style="font-size:18px">${fmt(p.valorTotal)}</div></div>
-      <div class="stat-card stat-green"><div class="stat-label">Total Pago</div><div class="stat-value" style="font-size:18px">${fmt(resumo.totalPago)}</div></div>
-      <div class="stat-card stat-red"><div class="stat-label">Saldo</div><div class="stat-value" style="font-size:18px">${fmt(resumo.saldo)}</div></div>
-      <div class="stat-card"><div class="stat-label">% Paga</div><div class="stat-value" style="font-size:18px">${(resumo.percentagemPaga||0).toFixed(0)}%</div></div>
-    </div>
-    <div class="card card-sm" style="margin-bottom:14px">
-      ${[['Cliente',p.clienteNome],['Tipo',p.tipo],['País Destino',p.paisDestino||'—'],['Estado',estadoBadge(p.estado)],['Pagamento',pgBadge(resumo.estadoPagamento)],['Criado em',fmtDate(p.dataCriacao)],['Agendamento',p.dataAgendamento?fmtDate(p.dataAgendamento):'—']].map(([l,v])=>`
-      <div class="info-row"><span class="detail-label">${l}</span><span class="detail-value">${v}</span></div>`).join('')}
-    </div>
-    <div style="margin-bottom:14px">
-      <div style="font-size:13px;font-weight:500;margin-bottom:8px">Documentos (${docs.length})</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px">
-        ${docs.length?docs.map(d=>`<span class="doc-chip">${docBadge(d.status)} <span style="font-size:12px">${d.tipo}</span></span>`).join(''):'<span style="font-size:13px;color:var(--text3)">Sem documentos</span>'}
-      </div>
-    </div>
-    <div>
-      <div style="font-size:13px;font-weight:500;margin-bottom:8px">Histórico de Pagamentos</div>
-      ${(resumo.historicoPagamentos||[]).length===0?`<div style="font-size:13px;color:var(--text3)">Sem pagamentos registados</div>`:`
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Data</th><th>Valor</th><th>Método</th><th>Ref.</th></tr></thead>
-          <tbody>${(resumo.historicoPagamentos||[]).map(pg=>`
-          <tr><td style="font-size:12px">${fmtDate(pg.dataPagamento)}</td>
-          <td style="color:var(--green);font-weight:500">${fmt(pg.valor)}</td>
-          <td>${pg.metodo}</td>
-          <td style="font-size:12px;font-family:monospace">${pg.referencia||'—'}</td></tr>`).join('')}
-          </tbody>
-        </table>
-      </div>`}
-    </div>`;
-  }catch(e){document.getElementById('detail-body').innerHTML=`<div class="empty-state">${e.message}</div>`;}
-}
-
-// SAVE CLIENTE
-function openClienteModal(){
-  document.getElementById('mc-title').textContent='Novo Cliente';
-  ['c-nome','c-bi','c-email','c-tel','c-nac','c-obs'].forEach(id=>document.getElementById(id).value='');
-  openModal('modal-cliente');
-}
-async function saveCliente(){
-  const nome=document.getElementById('c-nome').value.trim();
-  if(!nome){toast('Nome é obrigatório','error');return;}
-  const btn=document.getElementById('save-cliente-btn');
-  btn.textContent='A guardar...';btn.disabled=true;
-  try{
-    await api('/clientes','POST',{nome,numeroBI:document.getElementById('c-bi').value,email:document.getElementById('c-email').value,telefone:document.getElementById('c-tel').value,nacionalidade:document.getElementById('c-nac').value,observacoes:document.getElementById('c-obs').value});
-    toast('Cliente criado com sucesso','success');
-    closeModal('modal-cliente');
-    loadClientes();loadDashboard();
-  }catch(e){toast(e.message,'error');}
-  finally{btn.textContent='Guardar';btn.disabled=false;}
-}
-
-// SAVE PROCESSO
-async function openProcessoModal(){
-  const sel=document.getElementById('p-cliente');
-  sel.innerHTML='<option value="">Seleccionar cliente...</option>';
-  const clientes=ALL_CLIENTES.length?ALL_CLIENTES:await api('/clientes').catch(()=>[]);
-  clientes.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.nome;sel.appendChild(o);});
-  ['p-tipo','p-pais','p-valor','p-data','p-obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  openModal('modal-processo');
-}
-async function saveProcesso(){
-  const clienteId=parseInt(document.getElementById('p-cliente').value);
-  const tipo=document.getElementById('p-tipo').value;
-  if(!clienteId||!tipo){toast('Cliente e tipo são obrigatórios','error');return;}
-  try{
-    await api('/processos','POST',{clienteId,tipo,paisDestino:document.getElementById('p-pais').value,valorTotal:parseFloat(document.getElementById('p-valor').value)||0,observacoes:document.getElementById('p-obs').value,dataAgendamento:document.getElementById('p-data').value||null});
-    toast('Processo criado com sucesso','success');
-    closeModal('modal-processo');
-    loadProcessos();loadDashboard();
-  }catch(e){toast(e.message,'error');}
-}
-
-// SAVE PAGAMENTO
-async function openPagamentoModal(){
-  const sel=document.getElementById('pg-processo');
-  sel.innerHTML='<option value="">Seleccionar processo...</option>';
-  const procs=ALL_PROCESSOS.length?ALL_PROCESSOS:await api('/processos').catch(()=>[]);
-  procs.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=`#${p.id} — ${p.clienteNome} (${p.tipo})`;sel.appendChild(o);});
-  ['pg-valor','pg-metodo','pg-ref','pg-obs'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  openModal('modal-pagamento');
-}
 async function savePagamento(){
-  const processoId=parseInt(document.getElementById('pg-processo').value);
-  const valor=parseFloat(document.getElementById('pg-valor').value);
-  const metodo=document.getElementById('pg-metodo').value;
-  if(!processoId||!valor||!metodo){toast('Processo, valor e método são obrigatórios','error');return;}
+  const processoId=parseInt($('pg-proc').value);
+  const valor=parseFloat($('pg-val').value);
+  const metodo=$('pg-met').value;
+  if(!processoId||!valor||valor<=0||!metodo){toast('Processo, valor e método são obrigatórios','err');return;}
   try{
-    await api('/pagamentos','POST',{processoId,valor,metodo,referencia:document.getElementById('pg-ref').value,observacao:document.getElementById('pg-obs').value});
-    toast('Pagamento registado','success');
-    closeModal('modal-pagamento');
-    loadPagamentos();loadDashboard();loadProcessos();
-  }catch(e){toast(e.message,'error');}
+    await api('/pagamentos','POST',{processoId,valor,metodo,referencia:$('pg-ref').value,observacao:$('pg-obs').value});
+    toast('Pagamento registado','ok');closeM('m-pagamento');
+    await Promise.all([loadPagamentos(),loadProcessos(),loadDash()]);
+  }catch(e){toast(e.message,'err');}
 }
 
-// UTILS
-function fmtDate(d){if(!d)return'—';const dt=new Date(d);return dt.toLocaleDateString('pt-AO',{day:'2-digit',month:'short',year:'numeric'});}
-function fmtBytes(b){if(!b)return'—';if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(0)+'KB';return(b/1048576).toFixed(1)+'MB';}
-
-// CLOSE ON OVERLAY CLICK
-document.querySelectorAll('.modal-overlay').forEach(o=>{
-  o.addEventListener('click',e=>{if(e.target===o&&o.id!=='login-modal')closeModal(o.id);});
-});
-
-// START
-if(TOKEN){
-  closeModal('login-modal');
-  initApp();
+async function delPagamento(id,processoId){
+  if(!isAdmin){toast('Requer permissão Admin','err');return;}
+  openConfirm('Eliminar Pagamento','Esta acção é irreversível e afecta o saldo do processo.',async()=>{
+    try{await api(`/pagamentos/${id}`,'DELETE');toast('Pagamento eliminado','ok');await Promise.all([loadPagamentos(),loadProcessos(),loadDash()]);if(processoId)openDetail(processoId);}
+    catch(e){toast(e.message,'err');}
+  });
 }
+
+// ── DOCUMENTOS ────────────────────────────────────
+async function loadDocs(){
+  try{
+    const procs=S.processos.length?S.processos:await api('/processos').catch(()=>[]);
+    const all=[];
+    await Promise.all(procs.slice(0,40).map(async p=>{
+      try{const dd=await api(`/documentos/processo/${p.id}`);dd.forEach(d=>{d._cn=p.clienteNome;d._tipo=p.tipo;});all.push(...dd);}catch{}
+    }));
+    S.docs=all;renderDocs();
+  }catch{}
+}
+function dFlt(f,el){S.dFlt=f;document.querySelectorAll('#page-documentos .flt').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderDocs();}
+function renderDocs(){
+  let list=S.docs;
+  if(S.dFlt!=='all')list=list.filter(d=>d.status===S.dFlt);
+  if(S.q)list=list.filter(d=>(d.tipo+d.nomeFicheiro+(d._cn||'')).toLowerCase().includes(S.q));
+  $('d-count').textContent=`${list.length} documento(s)`;
+  if(!list.length){$('d-body').innerHTML=`<div class="empty"><div class="empty-t">Nenhum documento encontrado</div></div>`;return;}
+  $('d-body').innerHTML=`<div class="tbl-wrap"><table>
+    <thead><tr><th>Tipo</th><th>Ficheiro</th><th>Cliente</th><th>Processo</th><th>Status</th><th>Tamanho</th><th>Upload</th><th>Ações</th></tr></thead>
+    <tbody>${list.map(d=>`<tr>
+      <td class="td-main">${esc(d.tipo)}</td>
+      <td class="td-sub" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(d.nomeFicheiro)}">${esc(d.nomeFicheiro)}</td>
+      <td>${esc(d._cn||'—')}</td>
+      <td><span class="bdg bdg-gray tbl-clickable" onclick="openDetail(${d.processoId})" title="Ver processo">#${d.processoId}</span></td>
+      <td>${docBdg(d.status)}</td>
+      <td class="td-sub">${fmtBytes(d.tamanhoBytes)}</td>
+      <td class="td-sub">${fmtDate(d.dataUpload)}</td>
+      <td><div class="td-actions">
+        <button class="btn btn-ghost btn-xs" onclick="openDocStatus(${d.id},'${esc(d.tipo)}','${d.status}')">✏ Status</button>
+        <button class="btn btn-ghost btn-xs" onclick="dlDoc(${d.id},'${esc(d.nomeFicheiro)}')">↓ Download</button>
+        ${isAdmin?`<button class="btn btn-danger btn-xs" onclick="delDoc(${d.id},${d.processoId})">✕</button>`:''}
+      </div></td>
+    </tr>`).join('')}</tbody>
+  </table></div>`;
+}
+
+let _docStatusId=null;
+function openDocStatus(id,tipo,status){
+  _docStatusId=id;
+  $('mds-t').textContent=`Actualizar: ${tipo}`;
+  $('ds-status').value=status;$('ds-obs').value='';
+  openM('m-doc-status');
+}
+async function saveDocStatus(){
+  if(!_docStatusId)return;
+  try{
+    await api(`/documentos/${_docStatusId}/status`,'PATCH',{status:$('ds-status').value,observacao:$('ds-obs').value});
+    toast('Status actualizado','ok');closeM('m-doc-status');
+    await loadDocs();
+  }catch(e){toast(e.message,'err');}
+}
+async function dlDoc(id,nome){
+  try{
+    const r=await fetch(`${API}/documentos/download/${id}`,{headers:{'Authorization':'Bearer '+T}});
+    if(!r.ok)throw new Error();
+    const b=await r.blob();const u=URL.createObjectURL(b);
+    const a=document.createElement('a');a.href=u;a.download=nome;a.click();URL.revokeObjectURL(u);
+  }catch{toast('Erro ao descarregar','err');}
+}
+async function delDoc(id,processoId){
+  if(!isAdmin){toast('Requer permissão Admin','err');return;}
+  openConfirm('Eliminar Documento','O documento será eliminado permanentemente.',async()=>{
+    try{await api(`/documentos/${id}`,'DELETE');toast('Documento eliminado','ok');await loadDocs();if(processoId)openDetail(processoId);}
+    catch(e){toast(e.message,'err');}
+  });
+}
+
+// ── PASSWORD ──────────────────────────────────────
+function openChgPwd(){['pwd-cur','pwd-new','pwd-cnf'].forEach(f=>$(f).value='');$('pwd-err').style.display='none';openM('m-pwd');}
+async function savePwd(){
+  const cur=$('pwd-cur').value,np=$('pwd-new').value,cnf=$('pwd-cnf').value;
+  if(!cur||!np){$('pwd-err').textContent='Preencha todos os campos';$('pwd-err').style.display='block';return;}
+  if(np!==cnf){$('pwd-err').textContent='As passwords não coincidem';$('pwd-err').style.display='block';return;}
+  if(np.length<8){$('pwd-err').textContent='Mínimo 8 caracteres';$('pwd-err').style.display='block';return;}
+  try{
+    await api('/auth/alterar-password','POST',{passwordActual:cur,novaPassword:np});
+    toast('Password alterada com sucesso','ok');closeM('m-pwd');
+  }catch(e){$('pwd-err').textContent=e.message;$('pwd-err').style.display='block';}
+}
+
+// ── DRAG AND DROP ─────────────────────────────────
+const dz=$('dz');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag-over');});
+dz.addEventListener('dragleave',()=>dz.classList.remove('drag-over'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag-over');onFilePick(e.dataTransfer.files);});
+
+// ── INIT ──────────────────────────────────────────
+async function initApp(){
+  try{const me=await api('/auth/me');ME=me;isAdmin=me.role==='Admin';applyUserUI();}catch{}
+  await Promise.all([loadDash(),loadClientes(),loadProcessos()]);
+  loadPagamentos();loadDocs();
+}
+
+T=localStorage.getItem('vf_t')||'';
+if(T){$('login-screen').classList.remove('open');initApp();}
 </script>
 </body>
 </html>
